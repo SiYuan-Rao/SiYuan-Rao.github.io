@@ -1,0 +1,277 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vulnstack One | SiYuan-Rao</title>
+<link rel="shortcut icon" href="https://siyuan-rao.github.io/favicon.ico?v=1733983405965">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://siyuan-rao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Vulnstack One | SiYuan-Rao - Atom Feed" href="https://siyuan-rao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="
+0x01 网络结构
+
+
+.center {
+  width: auto;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+
+
+靶机名称
+IP地址
+
+
+
+
+..." />
+    <meta name="keywords" content="域渗透" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://siyuan-rao.github.io">
+  <img class="avatar" src="https://siyuan-rao.github.io/images/avatar.png?v=1733983405965" alt="">
+  </a>
+  <h1 class="site-title">
+    SiYuan-Rao
+  </h1>
+  <p class="site-description">
+    <b>One is Team !</b>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Vulnstack One
+            </h2>
+            <div class="post-info">
+              <span>
+                2023-03-21
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+                <a href="https://siyuan-rao.github.io/tag/KZubHDPwt/" class="post-tag">
+                  # 域渗透
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <!-- more -->
+<h3 id="0x01-网络结构">0x01 网络结构</h3>
+<figure data-type="image" tabindex="1"><img src="https://siyuan-rao.github.io/post-images/1679405432041.png" alt="" loading="lazy"></figure>
+<style>
+.center {
+  width: auto;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<div class="center">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">靶机名称</th>
+<th style="text-align:center">IP地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Web 服务器（Windows7）</td>
+<td style="text-align:center">192.168.52.143 172.16.208.156</td>
+</tr>
+<tr>
+<td style="text-align:center">域控（Windwos Server 2018）</td>
+<td style="text-align:center">192.168.52.138</td>
+</tr>
+<tr>
+<td style="text-align:center">域成员（Windows Server 2003）</td>
+<td style="text-align:center">192.168.52.141</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="0x02-信息收集">0x02 信息收集</h3>
+<figure data-type="image" tabindex="2"><img src="https://siyuan-rao.github.io/post-images/1679407167840.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://siyuan-rao.github.io/post-images/1679407182223.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://siyuan-rao.github.io/post-images/1679407197800.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://siyuan-rao.github.io/post-images/1679407744773.png" alt="" loading="lazy"></figure>
+<h3 id="0x03-渗透测试">0x03 渗透测试</h3>
+<p>根据上面的信息收集，目前有用的信息：</p>
+<ul>
+<li>PHPMyAdmin 存在弱口令：root/root</li>
+<li>PHPMyAdmin 的版本号：3.5.8.2 (2013-07-28)</li>
+<li>数据库存在弱口令仅限本机访问：root/root</li>
+<li>网站存在探针页面泄露网站信息</li>
+<li>网站存在 YXCMS 备份文件（beifen.rar）</li>
+</ul>
+<p>通过访问 PHPMyAdmin 中数据库以及备份文件猜测目标服务器下还存在 YXCMS，通过访问 yxcms 路径成功访问到 YXCMS。</p>
+<p>利用 YXCMS 通告里面给出的信息即可成功进入后台。</p>
+<p>目前可以通过 PHPMyAdmin 弱口令开启日志文件以及 YXCMS 后台模版文件 GetShell。</p>
+<figure data-type="image" tabindex="6"><img src="https://siyuan-rao.github.io/post-images/1679538199589.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://siyuan-rao.github.io/post-images/1679538208800.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="8"><img src="https://siyuan-rao.github.io/post-images/1679538219964.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="9"><img src="https://siyuan-rao.github.io/post-images/1679538227964.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="10"><img src="https://siyuan-rao.github.io/post-images/1679538254849.png" alt="" loading="lazy"></figure>
+<h3 id="mysql-日志文件-getshell">MySQL 日志文件 GetShell</h3>
+<p>MySQL 5.0 版本以上会创建日志文件，通过修改日志的全局变量打开日志并指定日志保存路径，在通过查询写入一句话木马，此时该木马会被日志记录并生成日志文件，从而 GetShell。</p>
+<p>secure_file_priv 变量被用于限制导入和导出的数据目录，比如 LOAD DATA 和 SELECT ... INTO OUTFILE 语句以及 LOAD_FILE() 函数。</p>
+<p>secure_file_priv 有些设置选项：</p>
+<ul>
+<li>如果为空，不做目录限制，即任何目录均可以。</li>
+<li>如果指定了目录，MySQL 会限制只能从该目录导入或导出该目录（该目录必须存在，MySQL 不会自动创建目录）。</li>
+<li>如果设置为 NULL，MySQL 服务器禁止导入与导出功能。</li>
+</ul>
+<pre><code class="language-sql">// 查询 select_file_priv
+select @@secure_file_priv
+
+// 查询日志全局变量
+show global variables like '%general%'
+
+// 打开日志保存功能
+set global general_log = &quot;ON&quot;
+
+// 设置日志文件保存路径
+set global general_log_file = &quot;xxxxx/shell.php&quot;
+</code></pre>
+<h3 id="msf">MSF</h3>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#0x01-%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84">0x01 网络结构</a></li>
+<li><a href="#0x02-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86">0x02 信息收集</a></li>
+<li><a href="#0x03-%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95">0x03 渗透测试</a></li>
+<li><a href="#mysql-%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6-getshell">MySQL 日志文件 GetShell</a></li>
+<li><a href="#msf">MSF</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://siyuan-rao.github.io/2023-nian-03-yue-11-ri/">
+              <h3 class="post-title">
+                2023 年 03 月 11 日
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://siyuan-rao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

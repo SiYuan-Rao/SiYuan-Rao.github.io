@@ -1,0 +1,180 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>探索XSS利用编码绕过的原理 | SiYuan-Rao</title>
+<link rel="shortcut icon" href="https://siyuan-rao.github.io/favicon.ico?v=1733983405965">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://siyuan-rao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="探索XSS利用编码绕过的原理 | SiYuan-Rao - Atom Feed" href="https://siyuan-rao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="0x00 转载
+https://saucer-man.com/information_security/103.html
+0x01 认识请求网页的编码过程
+编码属于计算机系统的基础知识，其内容写起来估计也可以出本书了，不过或多或少我们都有所..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://siyuan-rao.github.io">
+  <img class="avatar" src="https://siyuan-rao.github.io/images/avatar.png?v=1733983405965" alt="">
+  </a>
+  <h1 class="site-title">
+    SiYuan-Rao
+  </h1>
+  <p class="site-description">
+    <b>One is Team !</b>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              探索XSS利用编码绕过的原理
+            </h2>
+            <div class="post-info">
+              <span>
+                2023-04-15
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h3 id="0x00-转载">0x00 转载</h3>
+<p>https://saucer-man.com/information_security/103.html</p>
+<h3 id="0x01-认识请求网页的编码过程">0x01 认识请求网页的编码过程</h3>
+<p>编码属于计算机系统的基础知识，其内容写起来估计也可以出本书了，不过或多或少我们都有所了解。总的来说，编码就是将字符变为二进制数，而解码就是还原二进制数为字符。从浏览器请求URL到页面上显示出来也经历了一些编码和解码的过程，下面大概介绍一下流程。具体的过程可参考：http://taligarsiel.com/Projects/howbrowserswork1.htm</p>
+<p>URL 编码：URL编码是为了允许URL中存在汉子这样的非标准字符，本质是把一个字符转为%加上UTF-8编码对应的十六进制数字。所以又称之为 Percent-encoding。在服务端接收到请求时，会自动对请求进行一次URL解码。</p>
+<p>HTML编码/解码：当浏览器接收到服务端发送来端二进制数据后，首先会对其进行HTML解码，呈现出来的就是我们看到的源代码。具体的解码方式依具体情况而定，所以我们需要在页面中指定编码，防止浏览器按照错误的方式解码，造成乱码，比如百度搜索首页就指定了解码方式为UTF-8（为了找到重点，对其余地方打码）。但是在HTLM中有些字符是和关键词冲突的，比如 &lt;、&gt;、&amp;，解码之后，浏览器会误认为它们是标签，怎么解决呢？为了正确地显示预留字符，我们需要在HTLM源代码中使用字符实体，比如我们常见的空格&amp;nbsp；，字符实体以&amp;开头+预先定义的实体名称表示，但不是所有的字符都有实体名称，但是它们都有实体编码，也可以用&amp;#开头+实体编码+分号表示。<br>
+<img src="https://siyuan-rao.github.io/post-images/1681558282321.jpeg" alt="" loading="lazy"></p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#0x00-%E8%BD%AC%E8%BD%BD">0x00 转载</a></li>
+<li><a href="#0x01-%E8%AE%A4%E8%AF%86%E8%AF%B7%E6%B1%82%E7%BD%91%E9%A1%B5%E7%9A%84%E7%BC%96%E7%A0%81%E8%BF%87%E7%A8%8B">0x01 认识请求网页的编码过程</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://siyuan-rao.github.io/fu-shi-hu-xi/">
+              <h3 class="post-title">
+                腹式呼吸
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://siyuan-rao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

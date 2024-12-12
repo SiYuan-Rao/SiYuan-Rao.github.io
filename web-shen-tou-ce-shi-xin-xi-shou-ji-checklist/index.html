@@ -1,0 +1,226 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Web 渗透测试信息收集 - CheckList | SiYuan-Rao</title>
+<link rel="shortcut icon" href="https://siyuan-rao.github.io/favicon.ico?v=1733983405965">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://siyuan-rao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Web 渗透测试信息收集 - CheckList | SiYuan-Rao - Atom Feed" href="https://siyuan-rao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="0x00 获取真实IP
+为了保证网络的稳定和快速传输，网站服务商会在网络的不同位置设置节点服务器，通过CDN（Content Delivery Network，内容分发网络）技术，将网络请求分发到最优的节点服务器上面。如果网站开启了CDN加..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://siyuan-rao.github.io">
+  <img class="avatar" src="https://siyuan-rao.github.io/images/avatar.png?v=1733983405965" alt="">
+  </a>
+  <h1 class="site-title">
+    SiYuan-Rao
+  </h1>
+  <p class="site-description">
+    <b>One is Team !</b>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Web 渗透测试信息收集 - CheckList
+            </h2>
+            <div class="post-info">
+              <span>
+                2023-05-31
+              </span>
+              <span>
+                7 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h3 id="0x00-获取真实ip">0x00 获取真实IP</h3>
+<p>为了保证网络的稳定和快速传输，网站服务商会在网络的不同位置设置节点服务器，通过CDN（Content Delivery Network，内容分发网络）技术，将网络请求分发到最优的节点服务器上面。如果网站开启了CDN加速，就无法通过网站的域名信息获取真实的IP，要对目标的IP资源进行收集，就要绕过CDN查询到其真实的IP信息。</p>
+<p>在对目标IP信息收集之前，首先要判断目标网站是否开启了CDN，一般通过不同地方的主机PING域名和nslookup域名解析两种方式，通过查看返回的IP是否是多个的方式来判断网站是否开启了CDN，如果返回的IP信息是多个不同的IP，那就有可能使用CDN技术。</p>
+<p><strong>使用PING域名判断是否有CDN：</strong> 直接使用PING域名查看回显地址来判断，如下回显1595096.sched.d0-dk.tdnsdp1.cn，很明显使用了CDN技术。<br>
+<img src="https://siyuan-rao.github.io/post-images/1685539627197.png" alt="" loading="lazy"></p>
+<p><strong>使用不同主机PING域名判断是否有CDN：</strong> 如果在多地都有主机可以PING域名，就可以根据返回的IP信息进行判断。互联网有很多公开的服务可以进行多地PING来判断是否开启了CDN（网上这些网站界面是真的丑，百度关键词：多地PING、超级PING）。</p>
+<p><strong>使用nslookup域名解析判断是否有CDN</strong></p>
+<h3 id="0x01-如何绕过cdn获取真实ip">0x01 如何绕过CDN获取真实IP</h3>
+<p><strong>查询子域名：</strong> 由于CDN加速需要支付一定的费用，很多网站只对主站做了CDN加速，子域名没有做CDN加速，子域名可能跟主战在同一个服务器或者同一个C段网络中，可以通过子域名探测的方式，收集目标的子域名信息，通过查询子域名的IP信息来辅助判断主站的真实IP信息。</p>
+<p><strong>查询历史DNS记录：</strong> 通过查询DNS与IP绑定的历史记录就有可能发现之前的真实IP信息，常用的第三方服务网站有：</p>
+<ul>
+<li>dnsdb：https://dnsdb.io/zh-cn/</li>
+<li>viewdns：https://viewdns.info/iphistory/</li>
+<li>微步在线：https://x.threatbook.cn/</li>
+</ul>
+<p><strong>使用国外主机请求域名：</strong> 部分国内的CDN加速服务商只对国内的线路做了CDN加速，但是国外的线路没有做加速，这就就可以通过国外的主机来探测真实的IP信息。</p>
+<p>探测的方式也有两种，可以利用已有的国外主机直接进行探测；如果没有国外主机，可以利用公开的多地PING服务（多地PING服务有国外的探测节点）。</p>
+<p><strong>网站信息泄漏漏洞：</strong> 利用网站存在的漏洞和信息泄漏的敏感信息、文件（如：phpinfo() 文件、网站源码文件、Github 泄漏的信息等）获取真实的IP信息。</p>
+<p>phpinfo() 页面中有一个 SERVER_ADDR 字段会显示该主机的真实IP。</p>
+<p><strong>邮件信息：</strong> 一般的邮件系统都在内部，没有经过CDN的解析，通过利用目标网站的邮箱注册、找回密码或者RSS订阅等功能，接收到发来的邮件后，查看邮件源码就可以获取的目标的真实IP。</p>
+<p><strong>目标网站APP应用：</strong> 如果目标网站有自己的App，可以尝试利用Burp Suite Pro等流量抓包工具抓取APP的请求，从里面可能会找到目标的真实IP。</p>
+<h3 id="0x02-旁站查询">0x02 旁站查询</h3>
+<p>旁站是与攻击目标在同一服务器上不同的网站，获取到目标真实IP的情况下，在攻击目标没有可利用漏洞的情况下，可以通过查找旁站的漏洞攻击旁站，然后在通过提权拿到服务器的最高权限，拿到服务器的最高权限后攻击目标也就拿下了。</p>
+<p><strong>Nmap 扫描获取旁站信息：</strong> 对目标IP进行全端口扫描，确保每个可能开放的端口服务都能识别到（nmap -sV -p 1-65535 x.x.x.x）。</p>
+<p><strong>第三方服务获取旁站信息：</strong> 旁站信息可以通过第三方服务进行收集，比如在线网站与搜索引擎等。以下是几个在线搜集网站：</p>
+<ul>
+<li>站长工具同IP网站查询：https://stool.chinaz.com/same</li>
+<li>webscan：https://www.webscan.cc/</li>
+<li>云悉：https://www.yunsee.cn/</li>
+<li>微步在线：https://x.threatbook.cn/</li>
+</ul>
+<p><strong>搜索引擎语言：</strong> https://cn.bing.com/search?q=ip:x.x.x.x</p>
+<p><strong>空间测绘搜索引擎：</strong> ip=&quot;x.x.x.x&quot;</p>
+<h3 id="0x03-c段查询">0x03 C段查询</h3>
+<p>C段主机是指与目标服务器在同一C段网络的服务器。攻击目标的C段存活主机是信息手机的重要步骤，很多企业的内部服务器可能都会在通一个C段网络中。在很难找到攻击目标服务器互联网漏洞的情况下，可以通过攻击C段主机，获取C段主机的控制权，进入企业内网，在企业的内网安全隔离及安全防护不如互联网防护健全的情况下，可以通过C段主机进行内网渗透，这样就可以绕过互联网的防护，对目标进行攻击。但是这种攻击方式很容易打偏。</p>
+<p><strong>Nmap扫描C段</strong><br>
+通过命令 nmap -sn x.x.x.x/24，对目标IP的C段主机进行存活扫描，根据扫描的结果可以判断目标IP的C段还有哪些主机存活。</p>
+<p><strong>搜索引擎语法收集C段信息</strong></p>
+<ul>
+<li>Google：site:x.x.x.*</li>
+<li>Fofa：ip=&quot;x.x.x.x/24&quot;</li>
+<li>在线C段扫描工具</li>
+<li>https://chapangzhan.com/</li>
+<li>云悉：https://www.yunsee.cn/</li>
+</ul>
+<h3 id="0x04-子域名查询">0x04 子域名查询</h3>
+<p>一般企业对于主站域名的应用的防护措施比较健全，不管是应用本身的漏洞发现、漏洞修复，还是安全设备相关的防护都做得更加及时和到位，而企业可能有多个、十几个甚至更多的子域名应用，因为子域名数量多，企业子域名应用的防护可能没有主站及时。攻击者在主站域名找不到突破口时，就可以进行子域名的信息收集，然后通过子域名的漏洞进行迂回攻击。子域名信息收集主要包含枚举发现子域名、搜索引擎发现子域名、第三方聚合服务发现子域名、证书透明性信息发现子域名、DNS域传送发现子域名等方式。</p>
+<p><strong>枚举发现子域名</strong><br>
+子域名收集可以通过枚举的方式对子域名进行收集，枚举需要一个好的字典，制作字典时会将常见子域名的名字放到字段里面，增加枚举的成功率。子域名暴力破解常用的工具以下：</p>
+<ul>
+<li>在线子域名查询：</li>
+</ul>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#0x00-%E8%8E%B7%E5%8F%96%E7%9C%9F%E5%AE%9Eip">0x00 获取真实IP</a></li>
+<li><a href="#0x01-%E5%A6%82%E4%BD%95%E7%BB%95%E8%BF%87cdn%E8%8E%B7%E5%8F%96%E7%9C%9F%E5%AE%9Eip">0x01 如何绕过CDN获取真实IP</a></li>
+<li><a href="#0x02-%E6%97%81%E7%AB%99%E6%9F%A5%E8%AF%A2">0x02 旁站查询</a></li>
+<li><a href="#0x03-c%E6%AE%B5%E6%9F%A5%E8%AF%A2">0x03 C段查询</a></li>
+<li><a href="#0x04-%E5%AD%90%E5%9F%9F%E5%90%8D%E6%9F%A5%E8%AF%A2">0x04 子域名查询</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://siyuan-rao.github.io/ji-yi-ci-403-rao-guo-ji-qiao/">
+              <h3 class="post-title">
+                记一次403绕过技巧
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://siyuan-rao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

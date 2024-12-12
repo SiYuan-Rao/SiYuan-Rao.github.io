@@ -1,0 +1,583 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vue 2.0 入门指北 | SiYuan-Rao</title>
+<link rel="shortcut icon" href="https://siyuan-rao.github.io/favicon.ico?v=1733983405965">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://siyuan-rao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Vue 2.0 入门指北 | SiYuan-Rao - Atom Feed" href="https://siyuan-rao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="0x01 Vue 简介
+
+Vue 指令指的是以 v- 开头的一组特殊语法。
+
+
+JavaScript 框架
+简化 DOM 操作
+响应式数据驱动
+
+0x02 第一个 Vue 程序
+
+导入开发版本的 Vue.js
+创建 Vue 实例对象，设置 ..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://siyuan-rao.github.io">
+  <img class="avatar" src="https://siyuan-rao.github.io/images/avatar.png?v=1733983405965" alt="">
+  </a>
+  <h1 class="site-title">
+    SiYuan-Rao
+  </h1>
+  <p class="site-description">
+    <b>One is Team !</b>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Vue 2.0 入门指北
+            </h2>
+            <div class="post-info">
+              <span>
+                2023-03-04
+              </span>
+              <span>
+                16 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h3 id="0x01-vue-简介">0x01 Vue 简介</h3>
+<blockquote>
+<p>Vue 指令指的是以 v- 开头的一组特殊语法。</p>
+</blockquote>
+<ul>
+<li>JavaScript 框架</li>
+<li>简化 DOM 操作</li>
+<li>响应式数据驱动</li>
+</ul>
+<h3 id="0x02-第一个-vue-程序">0x02 第一个 Vue 程序</h3>
+<ol>
+<li>导入开发版本的 Vue.js</li>
+<li>创建 Vue 实例对象，设置 el 属性和 data 属性</li>
+<li>使用简洁的模版语法把数据渲染到页面上</li>
+</ol>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;
+    &lt;title&gt;Vue基础&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        {{ message }}
+    &lt;/div&gt;
+    &lt;!-- 开发环境版本，包含了有帮助的命令行警告 --&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        var app = new Vue({
+            el : &quot;#app&quot;,
+            data : {
+                message : &quot;你好，小黑！&quot;
+            }
+        })
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="0x03-el-挂载点">0x03 el 挂载点</h3>
+<p>el 是用来设置 Vue 实例挂载（管理）的元素。Vue 会管理 el 选项命中的元素及其内部的后代元素。el 挂载点可以使用其他的选择器，但是建议使用 ID 选择器。el 挂载点可以是任何双标签，但是不能挂载在 HTML 和 BODY 标签上。</p>
+<h3 id="0x04-data-数据对象">0x04 data 数据对象</h3>
+<p>Vue 中用到的数据定义在 data 中。data 中可以定义 复杂类型的数据。渲染复杂类型数据时，遵守 JS 的语法即可。</p>
+<pre><code class="language-html">&lt;div id=&quot;app&quot;&gt;
+    {{ message }}
+&lt;/div&gt;
+
+var app = new Vue({
+    el : &quot;#app&quot;,
+    data : {
+        message : &quot;黑马程序员&quot;,
+        array : [],
+        obj : {}
+    }
+})
+</code></pre>
+<h3 id="0x05-v-text-指令">0x05 v-text 指令</h3>
+<p>v-text 指令的作用是设置标签的文本值（textContent）。v-text 指令默认写法会替换全部内容，使用 差值表达式{{}} 可以替换制定内容。v-text 指令内部支持写表达式。</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;v-text指令&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;h2 v-text=&quot;message + '!'&quot;&gt;深圳&lt;/h2&gt;
+        &lt;h2 v-text=&quot;info + '!'&quot;&gt;深圳&lt;/h2&gt;
+        &lt;h2&gt;{{ message + '!'}} 深圳&lt;/h2&gt;
+    &lt;/div&gt;
+    &lt;!-- 开发环境版本，包含了有帮助的命令行警告 --&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        var app = new Vue({
+            el : &quot;#app&quot;,
+            data : {
+                message : &quot;黑马程序员&quot;,
+                info : &quot;前端与移动教研部&quot;
+            }
+        })
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="0x06-v-html-指令">0x06 v-html 指令</h3>
+<p>v-html 指令的作用是设置元素的 innerHTML。v-htm 指令内容中有 html 结构会被解析成标签。v-text 指令无论内容是什么都只会解析为文本。</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;v-html指令&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;p v-html=&quot;contentOne&quot;&gt;&lt;/p&gt;
+        &lt;p v-html=&quot;contentTwo&quot;&gt;&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;!-- 开发环境版本，包含了有帮助的命令行警告 --&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        var app = new Vue({
+            el : &quot;#app&quot;,
+            data : {
+                contentOne : &quot;黑马程序员&quot;,
+                contentTwo : &quot;&lt;a href='#'&gt;黑马程序员&lt;/a&gt;&quot;
+            }
+        })
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="0x07-v-on-指令">0x07 v-on 指令</h3>
+<p>v-on 指令的作用是为元素绑定事件，事件名不需要写 on。v-on 指令可以简写为 @。绑定的方法定义在 methos 属性中，方法内部通过 this 关键字可以访问定义在 data 中数据。</p>
+<p>事件绑定的方法写成函数调用的形式可以传入自定义参数。定义方法时需要定义形参来接入传入的实参。事件后面可以跟上 .修饰符来对事件进行限制。具体事件修饰符可以去官网文档进行查看。</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;v-on指令&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;input type=&quot;button&quot; value=&quot;事件绑定&quot; v-on:click=&quot;doIt&quot;&gt;
+        &lt;input type=&quot;button&quot; value=&quot;事件绑定&quot; v-on:mouseenter=&quot;doIt&quot;&gt;
+        &lt;input type=&quot;button&quot; value=&quot;事件绑定&quot; v-on:dblclick=&quot;doIt&quot;&gt;
+    &lt;/div&gt;
+    &lt;!-- 开发环境版本，包含了有帮助的命令行警告 --&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        var app = new Vue({
+            el : &quot;#app&quot;,
+            methods : {
+                doIt : function() {
+                    alert('事件执行了！');
+                }
+            }
+        })
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;v-on补充&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;input type=&quot;button&quot; value=&quot;点击&quot; @click=&quot;doIt(666, '老铁')&quot;&gt;
+        &lt;input type=&quot;text&quot; @keyup.enter=&quot;sayHi&quot;&gt;
+    &lt;/div&gt;
+    &lt;!-- 开发环境版本，包含了有帮助的命令行警告 --&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        var app = new Vue({
+            el : &quot;#app&quot;,
+            methods : {
+                doIt : function(p1, p2) {
+                    console.log(&quot;做IT&quot;);
+                    console.log(p1);
+                    console.log(p2);
+                },
+                sayHi : function() {
+                    alert(&quot;吃了没&quot;);
+                }
+            }
+        })
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="0x08-v-show-指令">0x08 v-show 指令</h3>
+<p>v-show 指令的作用是根据真假切换元素的显示状态。v-show 指令的原理是修改元素的 display 属性来实现隐藏效果。v-show 指令后面的内容，最终都会解析成布尔值。数据改变之后，对应元素的显示状态会同步更新。</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;v-show指令&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;input type=&quot;button&quot; value=&quot;切换显示状态&quot; @click=&quot;changeIsShow&quot;&gt;
+        &lt;input type=&quot;button&quot; value=&quot;累加年龄&quot; @click=&quot;addAge&quot;&gt;
+        &lt;img src=&quot;./img/monkey.gif&quot; alt=&quot;&quot; v-show=&quot;isShow&quot;&gt;
+        &lt;img src=&quot;./img/monkey.gif&quot; alt=&quot;&quot; v-show=&quot;age&gt;=18&quot;&gt;
+    &lt;/div&gt;
+    &lt;!-- 开发环境版本，包含了有帮助的命令行警告 --&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        var app = new Vue({
+            el : &quot;#app&quot;,
+            data : {
+                isShow : false,
+                age : 17
+            },
+            methods : {
+                changeIsShow : function() {
+                    this.isShow = !this.isShow;
+                },
+                addAge : function() {
+                    this.age++;
+                }
+            }
+        })
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="0x09-v-if-指令">0x09 v-if 指令</h3>
+<p>v-if 指令的作用是根据表达式的真假切换元素的显示状态。v-if 指令的本质是通过操纵 DOM 元素来切换显示状态。表达式的值为 true，元素存在于 DOM 树中；表达式的值为 false，元素从 DOM 树中移除。</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;v-if指令&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;input type=&quot;button&quot; value=&quot;切换显示&quot; @click=&quot;toggleIsShow&quot;&gt;
+        &lt;p v-if=&quot;isShow&quot;&gt;黑马程序员&lt;/p&gt;
+        &lt;p v-show=&quot;isShow&quot;&gt;黑马程序员 - v-show修饰&lt;/p&gt;
+        &lt;h2 v-if=&quot;temperature&gt;=35&quot;&gt;热死啦&lt;/h2&gt;
+    &lt;/div&gt;
+    &lt;!-- 开发环境版本，包含了有帮助的命令行警告 --&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        var app = new Vue({
+            el : &quot;#app&quot;,
+            data : {
+                isShow : false,
+                temperature : 20
+            },
+            methods : {
+                toggleIsShow : function() {
+                    this.isShow = !this.isShow;
+                }
+            }
+        })
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="0x10-v-bind-指令">0x10 v-bind 指令</h3>
+<p>v-bind 指令的作用是为元素绑定属性，完整写法是 v-bind:属性名，简写的话可以直接省略 v-bind，只保留 :属性名。<br>
+🚩需要动态的增删 class 建议使用对象的方式。</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;v-bind指令&lt;/title&gt;
+    &lt;style&gt;
+        .active{
+            border: 1px solid red;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;img v-bind:src=&quot;imgSrc&quot; alt=&quot;&quot;&gt;
+        &lt;br&gt;
+        &lt;img :src=&quot;imgSrc&quot; alt=&quot;&quot; :title=&quot;imgTitle + '!!!'&quot; :class=&quot;isActive ? 'active' : ''&quot; @click=&quot;toggleActive&quot;&gt;
+        &lt;br&gt;
+        &lt;img :src=&quot;imgSrc&quot; alt=&quot;&quot; :title=&quot;imgTitle + '!!!'&quot; :class=&quot;{active:isActive}&quot; @click=&quot;toggleActive&quot;&gt;
+    &lt;/div&gt;
+    &lt;!-- 开发环境版本，包含了有帮助的命令行警告 --&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        var app = new Vue({
+            el : &quot;#app&quot;,
+            data : {
+                imgSrc : &quot;http://www.itheima.com/images/logo.png&quot;,
+                imgTitle : &quot;黑马程序员&quot;,
+                isActive : false
+            },
+            methods : {
+                toggleActive : function() {
+                    this.isActive = !this.isActive;
+                }
+            }
+        })
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="0x11-v-for-指令">0x11 v-for 指令</h3>
+<p>v-for 指令的作用是根据数据生成列表结构。数组经常和 v-for 指令结合使用。v-for 指令的语法是 (item, index) in 数据，item 和 index 可以结合其他指令一起使用。数组长度的更新会同步到页面上，是响应式的。</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;v-for指令&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;input type=&quot;button&quot; value=&quot;添加数据&quot; @click=&quot;add&quot;&gt;
+        &lt;input type=&quot;button&quot; value=&quot;移除数据&quot; @click=&quot;remove&quot;&gt;
+
+        &lt;ul&gt;
+            &lt;li v-for=&quot;(it, index) in arr&quot;&gt;
+                {{ index + 1}}黑马程序员校区:{{ it }}
+            &lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;h2 v-for=&quot;item in vegetables&quot; v-bind:title=&quot;item.name&quot;&gt;
+            {{ item.name }}
+        &lt;/h2&gt;
+    &lt;/div&gt;
+    &lt;!-- 开发环境版本，包含了有帮助的命令行警告 --&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        var app = new Vue({
+            el : &quot;#app&quot;,
+            data : {
+                arr : [&quot;北京&quot;, &quot;上海&quot;, &quot;广州&quot;, &quot;深圳&quot;],
+                vegetables : [
+                    {name : &quot;西兰花炒蛋&quot;},
+                    {name : &quot;蛋炒西兰花&quot;}
+                ]
+            },
+            methods : {
+                add : function() {
+                    this.vegetables.push({name : &quot;花菜炒蛋&quot;});
+                },
+                remove : function() {
+                    this.vegetables.shift();
+                }
+            }
+        })
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="0x12-v-model-指令">0x12 v-model 指令</h3>
+<p>v-mode  指令的作用是便捷的设置和获取表单元素的值，绑定的数据会和表单元素值相关联。</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;v-model指令&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;input type=&quot;button&quot; value=&quot;修改message&quot; @click=&quot;setM&quot;&gt;
+        &lt;input type=&quot;text&quot; v-model=&quot;message&quot; @keyup.enter=&quot;getM&quot;&gt;
+        &lt;h2&gt;{{ message }}&lt;/h2&gt;
+    &lt;/div&gt;
+    &lt;!-- 开发环境版本，包含了有帮助的命令行警告 --&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        var app = new Vue({
+            el : &quot;#app&quot;,
+            data : {
+                message : &quot;黑马程序员&quot;
+            },
+            methods : {
+                getM : function() {
+                    alert(this.message);
+                },
+                setM : function() {
+                    this.message = &quot;酷丁鱼&quot;;
+                }
+            }
+        })
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="0x13-生命周期">0x13 生命周期</h3>
+<p>生命周期的八个阶段：每触发一个生命周期事件，会自动执行一个生命周期方法，这些生命周期方法也被称为钩子方法。<br>
+<img src="https://siyuan-rao.github.io/post-images/1678514782367.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1678514807401.png" alt="" loading="lazy"></p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#0x01-vue-%E7%AE%80%E4%BB%8B">0x01 Vue 简介</a></li>
+<li><a href="#0x02-%E7%AC%AC%E4%B8%80%E4%B8%AA-vue-%E7%A8%8B%E5%BA%8F">0x02 第一个 Vue 程序</a></li>
+<li><a href="#0x03-el-%E6%8C%82%E8%BD%BD%E7%82%B9">0x03 el 挂载点</a></li>
+<li><a href="#0x04-data-%E6%95%B0%E6%8D%AE%E5%AF%B9%E8%B1%A1">0x04 data 数据对象</a></li>
+<li><a href="#0x05-v-text-%E6%8C%87%E4%BB%A4">0x05 v-text 指令</a></li>
+<li><a href="#0x06-v-html-%E6%8C%87%E4%BB%A4">0x06 v-html 指令</a></li>
+<li><a href="#0x07-v-on-%E6%8C%87%E4%BB%A4">0x07 v-on 指令</a></li>
+<li><a href="#0x08-v-show-%E6%8C%87%E4%BB%A4">0x08 v-show 指令</a></li>
+<li><a href="#0x09-v-if-%E6%8C%87%E4%BB%A4">0x09 v-if 指令</a></li>
+<li><a href="#0x10-v-bind-%E6%8C%87%E4%BB%A4">0x10 v-bind 指令</a></li>
+<li><a href="#0x11-v-for-%E6%8C%87%E4%BB%A4">0x11 v-for 指令</a></li>
+<li><a href="#0x12-v-model-%E6%8C%87%E4%BB%A4">0x12 v-model 指令</a></li>
+<li><a href="#0x13-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">0x13 生命周期</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://siyuan-rao.github.io/json/">
+              <h3 class="post-title">
+                JSON
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://siyuan-rao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

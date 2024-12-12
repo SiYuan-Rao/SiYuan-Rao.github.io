@@ -1,0 +1,187 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ICMP隧道 | SiYuan-Rao</title>
+<link rel="shortcut icon" href="https://siyuan-rao.github.io/favicon.ico?v=1733983405965">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://siyuan-rao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="ICMP隧道 | SiYuan-Rao - Atom Feed" href="https://siyuan-rao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="0x00 简介
+ICMP隧道简单实用，是一个比较特殊的协议。在一般的通信协议里，如果两台设备要进行通信，肯定需要开放端口，而在ICMP协议下就不需要。最常见的PING命令就是利用的ICMP协议，攻击者可以利用命令行得到比回复更多的ICMP请..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://siyuan-rao.github.io">
+  <img class="avatar" src="https://siyuan-rao.github.io/images/avatar.png?v=1733983405965" alt="">
+  </a>
+  <h1 class="site-title">
+    SiYuan-Rao
+  </h1>
+  <p class="site-description">
+    <b>One is Team !</b>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              ICMP隧道
+            </h2>
+            <div class="post-info">
+              <span>
+                2024-01-06
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h3 id="0x00-简介">0x00 简介</h3>
+<p>ICMP隧道简单实用，是一个比较特殊的协议。在一般的通信协议里，如果两台设备要进行通信，肯定需要开放端口，而在ICMP协议下就不需要。最常见的PING命令就是利用的ICMP协议，攻击者可以利用命令行得到比回复更多的ICMP请求。在通常情况下，每个PING命令都有相应的回复与请求。</p>
+<p>在一些网络环境中，如果攻击者使用各类上层隧道(例如：HTTP隧道、DNS隧道、常规正/反向端口转发等)进行的操作都失败了，常常会通过PING命令访问远程计算机，尝试建立ICMP隧道，将TCP/UDP数据封装到ICMP的PING数据包中，从而穿过防火墙(防火墙一般不会屏蔽PING的数据包)，实现不受限制的访问访问。</p>
+<h3 id="0x01-icmpsh">0x01 icmpsh</h3>
+<p>Github地址：https://github.com/bdamele/icmpsh<br>
+<img src="https://siyuan-rao.github.io/post-images/1704543343771.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704543414070.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704543476485.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704543560788.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704543599127.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704543660848.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704543754028.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704543870720.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704543983613.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704619154360.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704619161218.png" alt="" loading="lazy"></p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#0x00-%E7%AE%80%E4%BB%8B">0x00 简介</a></li>
+<li><a href="#0x01-icmpsh">0x01 icmpsh</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://siyuan-rao.github.io/psexec-gong-ju-shi-yong-qian-xi-admindollar/">
+              <h3 class="post-title">
+                Psexec工具使用浅析（admin$）
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://siyuan-rao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

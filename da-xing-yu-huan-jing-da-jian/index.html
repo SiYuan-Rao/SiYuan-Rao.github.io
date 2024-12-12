@@ -1,0 +1,358 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>大型域环境搭建 | SiYuan-Rao</title>
+<link rel="shortcut icon" href="https://siyuan-rao.github.io/favicon.ico?v=1733983405965">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://siyuan-rao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="大型域环境搭建 | SiYuan-Rao - Atom Feed" href="https://siyuan-rao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="0x00 网络架构图
+
+0x01 主父域控制器（Windows Server 2016）
+IP：10.10.10.10
+子网掩码：255.255.255.0
+默认网关：10.10.10.1
+DNS：10.10.10.10
+
+
+
+
+
+
+
+
+
+..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://siyuan-rao.github.io">
+  <img class="avatar" src="https://siyuan-rao.github.io/images/avatar.png?v=1733983405965" alt="">
+  </a>
+  <h1 class="site-title">
+    SiYuan-Rao
+  </h1>
+  <p class="site-description">
+    <b>One is Team !</b>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              大型域环境搭建
+            </h2>
+            <div class="post-info">
+              <span>
+                2023-10-15
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h3 id="0x00-网络架构图">0x00 网络架构图</h3>
+<figure data-type="image" tabindex="1"><img src="https://siyuan-rao.github.io/post-images/1697434888177.jpeg" alt="" loading="lazy"></figure>
+<h3 id="0x01-主父域控制器windows-server-2016">0x01 主父域控制器（Windows Server 2016）</h3>
+<p>IP：10.10.10.10<br>
+子网掩码：255.255.255.0<br>
+默认网关：10.10.10.1<br>
+DNS：10.10.10.10<br>
+<img src="https://siyuan-rao.github.io/post-images/1697362273250.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697362364048.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697362496079.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697362553191.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697362598882.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697362658524.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697362704994.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697362755696.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697362844705.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697362919445.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697362991485.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697363081220.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697363131466.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697363229796.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697363276484.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697363324310.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697363417795.jpg" alt="" loading="lazy"></p>
+<blockquote>
+<p><strong>域控制器安装完毕后会进行重启，耐心等待即可。重启完成后的机器 DNS 会被自动修改成 127.0.0.1，需手动修改为 10.10.10.10。</strong><br>
+<img src="https://siyuan-rao.github.io/post-images/1697363958600.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697364180964.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697364229147.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697364312807.jpg" alt="" loading="lazy"></p>
+</blockquote>
+<h4 id="域控制的-dns-区域传输">域控制的 DNS 区域传输</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1697364060396.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697364522731.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697364584762.jpg" alt="" loading="lazy"></p>
+<h3 id="0x02-web-2012windows-server-2012">0x02 Web-2012（Windows Server 2012）</h3>
+<p>IP：10.10.10.12<br>
+子网掩码：255.255.255.0<br>
+默认网关：10.10.10.1<br>
+DNS：10.10.10.10<br>
+<img src="https://siyuan-rao.github.io/post-images/1697364817236.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697365563142.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697365854616.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697365907479.jpg" alt="" loading="lazy"></p>
+<h4 id="添加域用户">添加域用户</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1697366324222.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697366397080.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697366467452.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697366515584.jpg" alt="" loading="lazy"></p>
+<h4 id="登录域账户">登录域账户</h4>
+<figure data-type="image" tabindex="2"><img src="https://siyuan-rao.github.io/post-images/1697366645076.jpg" alt="" loading="lazy"></figure>
+<h3 id="web-2003windows-server-2003">Web-2003（Windows Server 2003）</h3>
+<p>IP：10.10.10.3<br>
+子网掩码：255.255.255.0<br>
+默认网关：10.10.10.1<br>
+DNS：10.10.10.10<br>
+<img src="https://siyuan-rao.github.io/post-images/1697371973087.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697372779555.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697372942353.jpg" alt="" loading="lazy"></p>
+<h4 id="添加域用户-2">添加域用户</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1697376062027.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697376091680.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697376158600.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697376206683.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697376244535.jpg" alt="" loading="lazy"></p>
+<h4 id="登录域用户">登录域用户</h4>
+<figure data-type="image" tabindex="3"><img src="https://siyuan-rao.github.io/post-images/1697376549914.jpg" alt="" loading="lazy"></figure>
+<h3 id="辅域控制器windows-server-2016">辅域控制器（Windows Server 2016）</h3>
+<p>IP：10.10.10.11<br>
+子网掩码：255.255.255.0<br>
+默认网关：10.10.10.1<br>
+首选 DNS：10.10.10.10<br>
+备选 DNS：10.10.10.11<br>
+<img src="https://siyuan-rao.github.io/post-images/1697378692451.jpg" alt="" loading="lazy"></p>
+<h4 id="加入域">加入域</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1697379040588.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697379097670.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697379183539.jpg" alt="" loading="lazy"></p>
+<h4 id="添加域管账号">添加域管账号</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1697379602943.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697379682816.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697379748950.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697379806478.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697379874446.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697379929754.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697379982648.jpg" alt="" loading="lazy"></p>
+<h4 id="辅域控制器搭建">辅域控制器搭建</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1697380241955.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697380445505.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697380487436.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697380602622.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697380641488.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697380676442.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697380725087.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697380759291.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697380811763.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697380900589.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697381059093.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697382284943.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697382453219.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697382507196.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697382560432.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697382597599.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697382642815.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697383036555.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697383216005.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697383260374.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697383323170.jpg" alt="" loading="lazy"></p>
+<h3 id="子域控制器windows-server-2016">子域控制器（Windows Server 2016）</h3>
+<p>父域控制器：redteam.com<br>
+子域控制器：saul.redteam.com</p>
+<p>IP：10.10.10.20<br>
+子网掩码：255.255.255.0<br>
+默认网关：10.10.10.1<br>
+首选 DNS：10.10.10.10（委派DNS后子域控制器DNS指向自己）<br>
+<img src="https://siyuan-rao.github.io/post-images/1697429575526.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697429839362.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697429888077.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697429936395.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697430200456.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697430367607.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697430470685.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697430526927.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697430605285.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697430694069.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697430752499.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697432509697.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697433419420.jpg" alt="" loading="lazy"></p>
+<h4 id="子域个人机器windows-7">子域个人机器（Windows 7）</h4>
+<p>IP：10.10.10.7<br>
+子网掩码：255.255.255.0<br>
+默认网关：10.10.10.1<br>
+首选 DNS 服务器：10.10.10.20<br>
+<img src="https://siyuan-rao.github.io/post-images/1697433627794.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697433879098.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697433915899.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697433964620.jpg" alt="" loading="lazy"></p>
+<h4 id="添加域用户-3">添加域用户</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1697434217351.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697434267101.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697434311517.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697434357851.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697434516483.jpg" alt="" loading="lazy"></p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#0x00-%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84%E5%9B%BE">0x00 网络架构图</a></li>
+<li><a href="#0x01-%E4%B8%BB%E7%88%B6%E5%9F%9F%E6%8E%A7%E5%88%B6%E5%99%A8windows-server-2016">0x01 主父域控制器（Windows Server 2016）</a>
+<ul>
+<li><a href="#%E5%9F%9F%E6%8E%A7%E5%88%B6%E7%9A%84-dns-%E5%8C%BA%E5%9F%9F%E4%BC%A0%E8%BE%93">域控制的 DNS 区域传输</a></li>
+</ul>
+</li>
+<li><a href="#0x02-web-2012windows-server-2012">0x02 Web-2012（Windows Server 2012）</a>
+<ul>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E5%9F%9F%E7%94%A8%E6%88%B7">添加域用户</a></li>
+<li><a href="#%E7%99%BB%E5%BD%95%E5%9F%9F%E8%B4%A6%E6%88%B7">登录域账户</a></li>
+</ul>
+</li>
+<li><a href="#web-2003windows-server-2003">Web-2003（Windows Server 2003）</a>
+<ul>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E5%9F%9F%E7%94%A8%E6%88%B7-2">添加域用户</a></li>
+<li><a href="#%E7%99%BB%E5%BD%95%E5%9F%9F%E7%94%A8%E6%88%B7">登录域用户</a></li>
+</ul>
+</li>
+<li><a href="#%E8%BE%85%E5%9F%9F%E6%8E%A7%E5%88%B6%E5%99%A8windows-server-2016">辅域控制器（Windows Server 2016）</a>
+<ul>
+<li><a href="#%E5%8A%A0%E5%85%A5%E5%9F%9F">加入域</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E5%9F%9F%E7%AE%A1%E8%B4%A6%E5%8F%B7">添加域管账号</a></li>
+<li><a href="#%E8%BE%85%E5%9F%9F%E6%8E%A7%E5%88%B6%E5%99%A8%E6%90%AD%E5%BB%BA">辅域控制器搭建</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AD%90%E5%9F%9F%E6%8E%A7%E5%88%B6%E5%99%A8windows-server-2016">子域控制器（Windows Server 2016）</a>
+<ul>
+<li><a href="#%E5%AD%90%E5%9F%9F%E4%B8%AA%E4%BA%BA%E6%9C%BA%E5%99%A8windows-7">子域个人机器（Windows 7）</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E5%9F%9F%E7%94%A8%E6%88%B7-3">添加域用户</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://siyuan-rao.github.io/web-shen-tou-ce-shi-xin-xi-shou-ji-checklist/">
+              <h3 class="post-title">
+                Web 渗透测试信息收集 - CheckList
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://siyuan-rao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

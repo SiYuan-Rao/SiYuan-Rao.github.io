@@ -1,0 +1,201 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Psexec工具使用浅析（admin$） | SiYuan-Rao</title>
+<link rel="shortcut icon" href="https://siyuan-rao.github.io/favicon.ico?v=1733983405965">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://siyuan-rao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Psexec工具使用浅析（admin$） | SiYuan-Rao - Atom Feed" href="https://siyuan-rao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="0x00 简介
+Psexec是Windows下非常好的一款远程命令行工具。Psexec的使用不需要对方主机开放3389端口，只需要对方开启admin$共享（该共享默认开启）。但是，假如目标主机开启了防火墙，Psexec也是不能使用的，会提示..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://siyuan-rao.github.io">
+  <img class="avatar" src="https://siyuan-rao.github.io/images/avatar.png?v=1733983405965" alt="">
+  </a>
+  <h1 class="site-title">
+    SiYuan-Rao
+  </h1>
+  <p class="site-description">
+    <b>One is Team !</b>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Psexec工具使用浅析（admin$）
+            </h2>
+            <div class="post-info">
+              <span>
+                2024-01-02
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h3 id="0x00-简介">0x00 简介</h3>
+<p>Psexec是Windows下非常好的一款远程命令行工具。Psexec的使用不需要对方主机开放3389端口，只需要对方开启admin$共享（该共享默认开启）。但是，假如目标主机开启了防火墙，Psexec也是不能使用的，会提示找不到网络路径。由于Psexec是Windows提供的工具，所以杀毒软件会将其添加到白名单中。</p>
+<p>Psexec的基本原理是：通过管道在远程目标机器上创建一个Psexec服务，并在本地磁盘中生成一个名为“PSEXESVC”的二进制文件。然后，通过Psexec服务运行命令，运行结束后删除服务。</p>
+<p>在使用Psexec执行远程命令时，会在目标系统中创建一个Psexec服务。命令执行后，Psexec服务将会自动删除。由于创建或删除服务时会产生大量的日志，所以会在攻击溯源时通过日志反推攻击流程。</p>
+<h3 id="0x01-psexec使用条件">0x01 Psexec使用条件</h3>
+<p>Psexec 使用前提：</p>
+<ul>
+<li>对方主机开启了admin$共享，如果关闭了admin$共享，会提示：找不到网络名。</li>
+<li>如果是工作组环境，则必须使用administrator用户连接，使用普通用户连接会提示：登录失败：未授权用户在此计算机上的请求登录类型。</li>
+<li>如果是域环境，连接普通域主机可以用普通域用户，连接域控需要域管理员。</li>
+</ul>
+<p><img src="https://siyuan-rao.github.io/post-images/1704203138052.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704203203014.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704203289058.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704205827370.png" alt="" loading="lazy"></p>
+<h3 id="0x02-psexec使用">0x02 Psexec使用</h3>
+<h4 id="工作组环境">工作组环境</h4>
+<p>如果是在非域环境下即工作组环境，Psexec只能使用administrator账号登录，使用其他账号（包括管理员组中的非administrator用户）登录都会提示拒绝访问。<br>
+<img src="https://siyuan-rao.github.io/post-images/1704206347525.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704206606098.png" alt="" loading="lazy"></p>
+<h4 id="域环境">域环境</h4>
+<p>域控只能使用域管理员组内账号密码登录，不能使用域普通成员账号登录。<br>
+<img src="https://siyuan-rao.github.io/post-images/1704207995540.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704208046091.png" alt="" loading="lazy"></p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#0x00-%E7%AE%80%E4%BB%8B">0x00 简介</a></li>
+<li><a href="#0x01-psexec%E4%BD%BF%E7%94%A8%E6%9D%A1%E4%BB%B6">0x01 Psexec使用条件</a></li>
+<li><a href="#0x02-psexec%E4%BD%BF%E7%94%A8">0x02 Psexec使用</a>
+<ul>
+<li><a href="#%E5%B7%A5%E4%BD%9C%E7%BB%84%E7%8E%AF%E5%A2%83">工作组环境</a></li>
+<li><a href="#%E5%9F%9F%E7%8E%AF%E5%A2%83">域环境</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://siyuan-rao.github.io/gong-zuo-zu-he-yu-de-qu-bie/">
+              <h3 class="post-title">
+                工作组和域的区别
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://siyuan-rao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

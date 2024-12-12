@@ -1,0 +1,371 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>内网信息收集 | SiYuan-Rao</title>
+<link rel="shortcut icon" href="https://siyuan-rao.github.io/favicon.ico?v=1733983405965">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://siyuan-rao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="内网信息收集 | SiYuan-Rao - Atom Feed" href="https://siyuan-rao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="0x00 前言
+当渗透测试人员进入内网后，面对的是一片“黑暗森林”，所以渗透人员首先会对当前所处的网络环境进行判断，通常的判断分为三种。
+
+我是谁？--- 对机器角色对判断
+这是哪？--- 对目前机器所处网络环境的拓扑结构进行分析和判断
+我..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://siyuan-rao.github.io">
+  <img class="avatar" src="https://siyuan-rao.github.io/images/avatar.png?v=1733983405965" alt="">
+  </a>
+  <h1 class="site-title">
+    SiYuan-Rao
+  </h1>
+  <p class="site-description">
+    <b>One is Team !</b>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              内网信息收集
+            </h2>
+            <div class="post-info">
+              <span>
+                2023-10-16
+              </span>
+              <span>
+                8 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h3 id="0x00-前言">0x00 前言</h3>
+<p>当渗透测试人员进入内网后，面对的是一片“黑暗森林”，所以渗透人员首先会对当前所处的网络环境进行判断，通常的判断分为三种。</p>
+<ul>
+<li>我是谁？--- 对机器角色对判断</li>
+<li>这是哪？--- 对目前机器所处网络环境的拓扑结构进行分析和判断</li>
+<li>我在哪？--- 对目前机器所处位置区域的判断</li>
+</ul>
+<p>对当前内网进行信息搜集，信息搜集越多对内网越了解才能在内网渗透中如鱼得水，因为内网渗透的本质其实就是信息搜集！</p>
+<h3 id="环境判断">环境判断</h3>
+<p>ipconfig：显示所有当前的 TCP/IP 网络配置值，并刷新动态主机配置协议（DHCP）和域名系统（DNS）设置。在没有参数的情况下使用时，ipconfig 会显示 Internet 协议版本4 （IPv4）和 IPv6地址、子网掩码以及所有适配器的默认网关。<br>
+<img src="https://siyuan-rao.github.io/post-images/1697467843634.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697467945585.jpg" alt="" loading="lazy"></p>
+<p>systeminfo：显示有关计算机及其操作系统的详细配置信息，包括操作系统配置、安全信息、产品ID和硬件属性（例如 RAM、磁盘空间和网卡）。<br>
+<img src="https://siyuan-rao.github.io/post-images/1697468123896.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697468211333.jpg" alt="" loading="lazy"></p>
+<p>Net 命令可用于对组、用户、账户策略、共享等执行操作。net config workstation：显示工作站运行的相关信息，net config server：显示服务器的相关信息。在 net config server 中可以确认服务器名、OS版本、最大用户数、最大会话数等信息。在 net config workstation 中可以确认机器名、用户名、OS版本、使用域名等信息。<br>
+<img src="https://siyuan-rao.github.io/post-images/1697469467985.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697469521243.jpg" alt="" loading="lazy"></p>
+<p>net time：确认和同步时间服务器<br>
+<img src="https://siyuan-rao.github.io/post-images/1697811415345.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697814396785.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697814513922.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697814621449.jpg" alt="" loading="lazy"></p>
+<h3 id="本机信息收集">本机信息收集</h3>
+<figure data-type="image" tabindex="1"><img src="https://siyuan-rao.github.io/post-images/1697814777044.jpg" alt="" loading="lazy"></figure>
+<h4 id="查询操作系统和版本信息">查询操作系统和版本信息</h4>
+<p>英文版系统：<br>
+systeminfo | findstr /B /C:&quot;OS Name&quot; /C:&quot;OS Version&quot;<br>
+中文版系统：<br>
+systeminfo | findstr /B /C:&quot;OS 名称&quot; /C:&quot;OS版本&quot;<br>
+<img src="https://siyuan-rao.github.io/post-images/1697815212441.jpg" alt="" loading="lazy"></p>
+<h4 id="查看系统体系结构">查看系统体系结构</h4>
+<p>echo %PROCESSOR_ARCHITECTURE%<br>
+<img src="https://siyuan-rao.github.io/post-images/1697816176676.jpg" alt="" loading="lazy"></p>
+<h4 id="查看按照的软件-版本以及路径">查看按照的软件、版本以及路径</h4>
+<p>wmic product get name,version</p>
+<p>wmic 是 Windows Management Instrumentation Command-line 的缩写。WMI 是 Windows 操作系统中的一个管理技术，用于监控和控制本地或远程计算机上的各种系统资源和组建。</p>
+<p>wmic 是 Windows 提供的一个命令行工具，用于通过 WMI 接口与系统进行交互。它允许用户执行各种查询和操作，获取有关计算机硬件、操作系统、网路配置等信息，并可以对系统资源进行管理。</p>
+<p>wmic 提供了一种简便的方式来管理和监控 Windows 系统，特别适用于自动化任务、批处理脚本和系统管理。它允许用户在命令行界面中直接执行各种管理操作，而无需图形界面或者其他复杂的工具。<br>
+<img src="https://siyuan-rao.github.io/post-images/1697819252726.jpg" alt="" loading="lazy"></p>
+<h4 id="查询本机服务信息">查询本机服务信息</h4>
+<p>wmic serivce list brief<br>
+<img src="https://siyuan-rao.github.io/post-images/1697854853926.jpg" alt="" loading="lazy"></p>
+<h4 id="查询进程列表">查询进程列表</h4>
+<p>tasklist<br>
+<img src="https://siyuan-rao.github.io/post-images/1697855018580.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697855221448.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1697855613689.jpg" alt="" loading="lazy"></p>
+<h4 id="查看启动程序信息">查看启动程序信息</h4>
+<p>wmic startup get command,caption<br>
+<img src="https://siyuan-rao.github.io/post-images/1697855846711.jpg" alt="" loading="lazy"></p>
+<h4 id="查看计划任务">查看计划任务</h4>
+<p>schtasks /query /fo LIST /v<br>
+<img src="https://siyuan-rao.github.io/post-images/1697857089782.jpg" alt="" loading="lazy"></p>
+<h4 id="查看主机开机时间">查看主机开机时间</h4>
+<p>net statistics workstation<br>
+net statistics [workstation] [server]：显示本地工作站或服务器服务的统计记录。<br>
+<img src="https://siyuan-rao.github.io/post-images/1697976065102.jpg" alt="" loading="lazy"></p>
+<h4 id="查看用户">查看用户</h4>
+<p>net user：添加或更改用户账号或显示用户账号信息<br>
+命令格式：net user [username] [password | *] [optiions] [/domain]<br>
+参数介绍：</p>
+<ul>
+<li>键入不带参数的 net user 查看计算机上的用户账号列表</li>
+<li>username：添加、删除、更改或查看用户账号名</li>
+<li>password：为用户账号分配或修改密码</li>
+<li>*：提示输入密码</li>
+<li>/domain：在计算机主域的主域控制器中执行操作<br>
+<img src="https://siyuan-rao.github.io/post-images/1697980125129.jpg" alt="" loading="lazy"></li>
+</ul>
+<h4 id="查看当前在线用户">查看当前在线用户</h4>
+<p>query user || qwinsta<br>
+query：显示有关进程、会话和远程桌面会话主机服务器的信息（https://learn.microsoft.com/zh-cn/windows-server/administration/windows-commands/query）。<br>
+query user：显示有关远程桌面会话主机服务器上的用户会话的信息（https://learn.microsoft.com/zh-cn/windows-server/administration/windows-commands/query-user）。<br>
+qwinsta：显示远程桌面会话主机服务器上的会话的相关信息。该列表不仅包含活动会话的相关信息，还包含服务器运行的其他会话的相关信息。<br>
+<img src="https://siyuan-rao.github.io/post-images/1697986019357.jpg" alt="" loading="lazy"></p>
+<h4 id="查看本机端口开放情况">查看本机端口开放情况</h4>
+<p>netstat -ano<br>
+netstat：显示活动的 TCP 连接数、计算机侦听的端口、以太网统计信息、IP 路由表、IPv4 统计信息（针对 IP、ICMP、TCP 和 UDP 协议），以及 IPv6 统计信息（针对 IPv6、ICMPv6、TCP over IPv6 和基于 IPv6 协议的 UDP）。 在不使用参数的情况下，此命令会显示活动的 TCP 连接数。<br>
+参数介绍：</p>
+<ul>
+<li>a：显示所有活动的 TCP 连接数以及计算机正在侦听的 TCP 和 UDP 端口。</li>
+<li>n：显示活动的 TCP 连接数，但是，地址和端口号以数字表示，并且不会尝试确定名称。</li>
+<li>o：显示活动的 TCP 连接数，并包括每个连接的进程 ID (PID)。 可以在 Windows 任务管理器的“进程”选项卡上基于 PID 找到应用程序。 此参数可与 -s、-n 和 -p 一起使用。</li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="https://siyuan-rao.github.io/post-images/1698027789424.jpg" alt="" loading="lazy"></figure>
+<h4 id="查看补丁信息">查看补丁信息</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1698027883528.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1698027991029.jpg" alt="" loading="lazy"></p>
+<h4 id="查看路由表及所有可用接口的arp缓冲表">查看路由表及所有可用接口的ARP缓冲表</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1698028126551.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1698028138230.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1698028192533.jpg" alt="" loading="lazy"></p>
+<h4 id="查看防火墙配置">查看防火墙配置</h4>
+<pre><code class="language-txt">Win 2003及之前的版本，运⾏指定程序全部连接：
+netsh firewall add allowedprogram C:\nc.exe &quot;allow nc&quot; enable
+
+Win 2003之后的版本：
+netsh advfirewall firewall add rule name=&quot;pass nc&quot; dir=in action=allow program=&quot;C:\nc.exe&quot;
+
+允许指定程序连出：
+netsh advfirewall firewall add rule name=&quot;Allow nc&quot; dir=out action=allow program=&quot;C:\nc.exe&quot;
+
+允许 3389 端口放行：
+netsh advfirewall firewall add rule name=&quot;Remote Desktop&quot; protocol=TCP dir=in localport=3389 action=allow
+
+自定义防火墙日志存储位置：
+netsh advfirewall set currentprofile logging filename &quot;C:\Windows\temp\fw.log&quot;
+
+Win 2003及之前的版本，关闭防火墙命令：
+netsh firewall set opmode disable
+
+Win 2003之后的版本，关闭防火墙命令：
+netsh advfirewall set allprofiles state off
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://siyuan-rao.github.io/post-images/1698028714432.jpg" alt="" loading="lazy"></figure>
+<h4 id="查询并开启远程桌面服务">查询并开启远程桌面服务</h4>
+<p>REG QUERY &quot;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal<br>
+Server\WinStations\RDP-Tcp&quot; /V PortNumber<br>
+REG：对注册表项中注册表子项信息和值执行操作。<br>
+REG QUERY：返回位于注册表中指定子项下的下一层子项和条目列表。<br>
+<img src="https://siyuan-rao.github.io/post-images/1698030739540.jpg" alt="" loading="lazy"></p>
+<pre><code class="language-txt">Windows Server 2003 开启 3389 端⼝
+wmic path win32_terminalservicesetting where (__CLASS !=&quot;&quot;) call setallowtsconnections 1
+
+Windows Server 2008 和 Windows Server 2012 开启 3389 端⼝
+wmic /namespace:\\root\cimv2\terminalservices path win32_terminalservicesetting where
+(__CLASS !=&quot;&quot;) call setallowtsconnections 1
+
+wmic /namespace:\\root\cimv2\terminalservices path win32_tsgeneralsetting where
+(TerminalName='RDP-Tcp') call setuserauthenticationrequired 1
+
+Windows 7 中开启 3389 端⼝
+reg add &quot;HKLM\SYSTEM\CURRENT\CONTROLSET\CONTROL\TERMINAL SERVER&quot; /v
+fSingleSessionPerUser /t REG_DWORD /d 0 /f  
+</code></pre>
+<h3 id="域内信息收集">域内信息收集</h3>
+<h4 id="获取域sid">获取域SID</h4>
+<figure data-type="image" tabindex="4"><img src="https://siyuan-rao.github.io/post-images/1698031167853.jpg" alt="" loading="lazy"></figure>
+<h4 id="查询域内用户">查询域内用户</h4>
+<figure data-type="image" tabindex="5"><img src="https://siyuan-rao.github.io/post-images/1698031450977.jpg" alt="" loading="lazy"></figure>
+<h4 id="查询域列表">查询域列表</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1698031900323.jpg" alt="" loading="lazy">、</p>
+<h4 id="查询域管理员列表">查询域管理员列表</h4>
+<figure data-type="image" tabindex="6"><img src="https://siyuan-rao.github.io/post-images/1698032001320.jpg" alt="" loading="lazy"></figure>
+<h4 id="查看域内时间时间服务器">查看域内时间（时间服务器）</h4>
+<figure data-type="image" tabindex="7"><img src="https://siyuan-rao.github.io/post-images/1698032179767.jpg" alt="" loading="lazy"></figure>
+<h4 id="查看登录本机的域管理员">查看登录本机的域管理员</h4>
+<figure data-type="image" tabindex="8"><img src="https://siyuan-rao.github.io/post-images/1698032280460.jpg" alt="" loading="lazy"></figure>
+<h4 id="查看域内所有用户组列表">查看域内所有用户组列表</h4>
+<figure data-type="image" tabindex="9"><img src="https://siyuan-rao.github.io/post-images/1698032412639.jpg" alt="" loading="lazy"></figure>
+<h4 id="查看主域控制器">查看主域控制器</h4>
+<p>netdom query pdc<br>
+netdom 是一个用于管理 Windows 域的命令行工具。它可用于执行各种域操作，包括管理域控制器、添加\删除计算机到域、修改计算机名等。<br>
+netdom query：查询域控制器、信任关系、域成员等信息。<br>
+<img src="https://siyuan-rao.github.io/post-images/1698033295398.jpg" alt="" loading="lazy"></p>
+<h4 id="查看所有域控制器列表">查看所有域控制器列表</h4>
+<figure data-type="image" tabindex="10"><img src="https://siyuan-rao.github.io/post-images/1698033420609.jpg" alt="" loading="lazy"></figure>
+<h4 id="查看域信任信息">查看域信任信息</h4>
+<figure data-type="image" tabindex="11"><img src="https://siyuan-rao.github.io/post-images/1698033499037.jpg" alt="" loading="lazy"></figure>
+<h4 id="查看域密码信息">查看域密码信息</h4>
+<figure data-type="image" tabindex="12"><img src="https://siyuan-rao.github.io/post-images/1698033554577.jpg" alt="" loading="lazy"></figure>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#0x00-%E5%89%8D%E8%A8%80">0x00 前言</a></li>
+<li><a href="#%E7%8E%AF%E5%A2%83%E5%88%A4%E6%96%AD">环境判断</a></li>
+<li><a href="#%E6%9C%AC%E6%9C%BA%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86">本机信息收集</a>
+<ul>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF">查询操作系统和版本信息</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84">查看系统体系结构</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E6%8C%89%E7%85%A7%E7%9A%84%E8%BD%AF%E4%BB%B6-%E7%89%88%E6%9C%AC%E4%BB%A5%E5%8F%8A%E8%B7%AF%E5%BE%84">查看按照的软件、版本以及路径</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E6%9C%AC%E6%9C%BA%E6%9C%8D%E5%8A%A1%E4%BF%A1%E6%81%AF">查询本机服务信息</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E8%BF%9B%E7%A8%8B%E5%88%97%E8%A1%A8">查询进程列表</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E4%BF%A1%E6%81%AF">查看启动程序信息</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1">查看计划任务</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E4%B8%BB%E6%9C%BA%E5%BC%80%E6%9C%BA%E6%97%B6%E9%97%B4">查看主机开机时间</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E7%94%A8%E6%88%B7">查看用户</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E5%9C%A8%E7%BA%BF%E7%94%A8%E6%88%B7">查看当前在线用户</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E6%9C%AC%E6%9C%BA%E7%AB%AF%E5%8F%A3%E5%BC%80%E6%94%BE%E6%83%85%E5%86%B5">查看本机端口开放情况</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E8%A1%A5%E4%B8%81%E4%BF%A1%E6%81%AF">查看补丁信息</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E8%B7%AF%E7%94%B1%E8%A1%A8%E5%8F%8A%E6%89%80%E6%9C%89%E5%8F%AF%E7%94%A8%E6%8E%A5%E5%8F%A3%E7%9A%84arp%E7%BC%93%E5%86%B2%E8%A1%A8">查看路由表及所有可用接口的ARP缓冲表</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE">查看防火墙配置</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E5%B9%B6%E5%BC%80%E5%90%AF%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E6%9C%8D%E5%8A%A1">查询并开启远程桌面服务</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9F%9F%E5%86%85%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86">域内信息收集</a>
+<ul>
+<li><a href="#%E8%8E%B7%E5%8F%96%E5%9F%9Fsid">获取域SID</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E5%9F%9F%E5%86%85%E7%94%A8%E6%88%B7">查询域内用户</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E5%9F%9F%E5%88%97%E8%A1%A8">查询域列表</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E5%9F%9F%E7%AE%A1%E7%90%86%E5%91%98%E5%88%97%E8%A1%A8">查询域管理员列表</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E5%9F%9F%E5%86%85%E6%97%B6%E9%97%B4%E6%97%B6%E9%97%B4%E6%9C%8D%E5%8A%A1%E5%99%A8">查看域内时间（时间服务器）</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E7%99%BB%E5%BD%95%E6%9C%AC%E6%9C%BA%E7%9A%84%E5%9F%9F%E7%AE%A1%E7%90%86%E5%91%98">查看登录本机的域管理员</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E5%9F%9F%E5%86%85%E6%89%80%E6%9C%89%E7%94%A8%E6%88%B7%E7%BB%84%E5%88%97%E8%A1%A8">查看域内所有用户组列表</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E4%B8%BB%E5%9F%9F%E6%8E%A7%E5%88%B6%E5%99%A8">查看主域控制器</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E5%9F%9F%E6%8E%A7%E5%88%B6%E5%99%A8%E5%88%97%E8%A1%A8">查看所有域控制器列表</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E5%9F%9F%E4%BF%A1%E4%BB%BB%E4%BF%A1%E6%81%AF">查看域信任信息</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E5%9F%9F%E5%AF%86%E7%A0%81%E4%BF%A1%E6%81%AF">查看域密码信息</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://siyuan-rao.github.io/da-xing-yu-huan-jing-da-jian/">
+              <h3 class="post-title">
+                大型域环境搭建
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://siyuan-rao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

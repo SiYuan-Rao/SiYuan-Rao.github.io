@@ -1,0 +1,202 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>JSON | SiYuan-Rao</title>
+<link rel="shortcut icon" href="https://siyuan-rao.github.io/favicon.ico?v=1733983405965">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://siyuan-rao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="JSON | SiYuan-Rao - Atom Feed" href="https://siyuan-rao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="0x01 JSON 简介
+概念：JavaScript Object Notation，JavaScript 对象表示法。
+由于其语法简单，层次结构鲜明，现多用于作为数据载体，在网络中进行数据传输。
+0x02 JSON 基础语法
+// 定义
+..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://siyuan-rao.github.io">
+  <img class="avatar" src="https://siyuan-rao.github.io/images/avatar.png?v=1733983405965" alt="">
+  </a>
+  <h1 class="site-title">
+    SiYuan-Rao
+  </h1>
+  <p class="site-description">
+    <b>One is Team !</b>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              JSON
+            </h2>
+            <div class="post-info">
+              <span>
+                2023-02-26
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h3 id="0x01-json-简介">0x01 JSON 简介</h3>
+<p>概念：JavaScript Object Notation，JavaScript 对象表示法。</p>
+<p>由于其语法简单，层次结构鲜明，现多用于作为数据载体，在网络中进行数据传输。</p>
+<h3 id="0x02-json-基础语法">0x02 JSON 基础语法</h3>
+<pre><code class="language-javascript">// 定义
+// value 的数据类型：
+    - 数字（整数或浮点数）
+    - 字符串（双引号）
+    - 逻辑值（true/false）
+    - 数组（方括号）
+    - 对象（花括号）
+    - null
+
+var 变量名 = {
+    &quot;key1&quot;:value1,
+    &quot;key2&quot;:value2,
+    ...
+}
+
+// 获取数据
+变量名.key
+</code></pre>
+<h3 id="0x03-json-数据和-java-对象转换">0x03 JSON 数据和 Java 对象转换</h3>
+<p>Fastjson 是阿里巴巴提供的一个 Java 语言编写的高性能功能完善的 JSON 库，是目前 Java 语言中最快的 JSON 库，可以实现 Java 对象和 JSON 字符串的相互转换。</p>
+<p>Java 对象转 JSON 字符串：String jsonStr = JSON.toJSONString(obj);</p>
+<p>JSON 字符串转 Java 对象：User user = JSON.parseObject(jsonStr, User.class);</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#0x01-json-%E7%AE%80%E4%BB%8B">0x01 JSON 简介</a></li>
+<li><a href="#0x02-json-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95">0x02 JSON 基础语法</a></li>
+<li><a href="#0x03-json-%E6%95%B0%E6%8D%AE%E5%92%8C-java-%E5%AF%B9%E8%B1%A1%E8%BD%AC%E6%8D%A2">0x03 JSON 数据和 Java 对象转换</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://siyuan-rao.github.io/ajax/">
+              <h3 class="post-title">
+                AJAX
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://siyuan-rao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

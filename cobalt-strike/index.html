@@ -1,0 +1,238 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cobalt Strike 基础入门 | SiYuan-Rao</title>
+<link rel="shortcut icon" href="https://siyuan-rao.github.io/favicon.ico?v=1733983405965">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://siyuan-rao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Cobalt Strike 基础入门 | SiYuan-Rao - Atom Feed" href="https://siyuan-rao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="0x00 什么是Cobalt Strike
+Cobalt Strike是一款用于模拟红队攻击的软件，其目标是致力于【缩小渗透测试工具和高级威胁恶意软件之间的差距】。Cobalt Strike（CS）的创始人是Raphael Mudge，他之..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://siyuan-rao.github.io">
+  <img class="avatar" src="https://siyuan-rao.github.io/images/avatar.png?v=1733983405965" alt="">
+  </a>
+  <h1 class="site-title">
+    SiYuan-Rao
+  </h1>
+  <p class="site-description">
+    <b>One is Team !</b>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Cobalt Strike 基础入门
+            </h2>
+            <div class="post-info">
+              <span>
+                2024-01-27
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h3 id="0x00-什么是cobalt-strike">0x00 什么是Cobalt Strike</h3>
+<p>Cobalt Strike是一款用于模拟红队攻击的软件，其目标是致力于【缩小渗透测试工具和高级威胁恶意软件之间的差距】。Cobalt Strike（CS）的创始人是Raphael Mudge，他之前在2010年的时候就发布了一款MSF图形化工具Armitage。直到2012年，Raphael Mudge推出了Armitage的增强版Cobalt Strike。<br>
+<img src="https://siyuan-rao.github.io/post-images/1706343710999.gif" alt="" loading="lazy"></p>
+<h3 id="0x01-前置定义">0x01 前置定义</h3>
+<p>C2：C2就是Command &amp; Control Server的简称，也就是命令与控制服务器。</p>
+<p>Listener：攻击者在C2上运行的服务，可以监听Beacon的请求。</p>
+<p>Beacon：植入到受感染系统的恶意程序，可以请求C2服务器并在受感染系统中执行命令。</p>
+<p>Team Server：Cobalt Strike的服务器组件。Team Server（TS）是配置和启动Listener的地方。</p>
+<h3 id="0x02-getting-started">0x02 Getting Started</h3>
+<h4 id="team-server-启动">Team Server 启动</h4>
+<pre><code class="language-shell"># 启动方法：./teamserver &lt;Server IP&gt; &lt;PassWord&gt; &lt;~Killdate&gt; &lt;~Profile&gt;
+# ~为可选参数
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://siyuan-rao.github.io/post-images/1706344198016.png" alt="" loading="lazy"></figure>
+<h4 id="客户端启动">客户端启动</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1706344460508.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1706346172356.png" alt="" loading="lazy"></p>
+<h4 id="设置listener">设置Listener</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1706347729674.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1706347766329.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1706349344403.png" alt="" loading="lazy"></p>
+<h4 id="生成stageless-payload">生成Stageless Payload</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1706349517021.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1706349605301.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1706349730868.png" alt="" loading="lazy"></p>
+<h4 id="肉鸡上线">肉鸡上线</h4>
+<figure data-type="image" tabindex="2"><img src="https://siyuan-rao.github.io/post-images/1706350017221.png" alt="" loading="lazy"></figure>
+<h4 id="修改beacon睡眠时间">修改Beacon睡眠时间</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1706350137063.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1706350276098.png" alt="" loading="lazy"></p>
+<h4 id="uac提权">UAC提权</h4>
+<p>如果你在目标系统中的权限为普通用户，那我们可以使用这种将自己的权限提升为管理员。<br>
+<img src="https://siyuan-rao.github.io/post-images/1706350554014.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1706350597496.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1706350937926.png" alt="" loading="lazy"></p>
+<h4 id="进程注入">进程注入</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1706351138442.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1706351628104.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1706351689239.png" alt="" loading="lazy"></p>
+<h4 id="键盘监听">键盘监听</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1706352041341.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1706352181175.png" alt="" loading="lazy"></p>
+<h4 id="屏幕截图">屏幕截图</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1706352663078.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1706352801930.png" alt="" loading="lazy"></p>
+<h4 id="命令执行">命令执行</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1706352899844.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1706352972222.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1706353015883.png" alt="" loading="lazy"></p>
+<h3 id="0x03-转载">0x03 转载</h3>
+<p>https://mp.weixin.qq.com/s/WAqgHn0DrXerEeow131w4Q</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#0x00-%E4%BB%80%E4%B9%88%E6%98%AFcobalt-strike">0x00 什么是Cobalt Strike</a></li>
+<li><a href="#0x01-%E5%89%8D%E7%BD%AE%E5%AE%9A%E4%B9%89">0x01 前置定义</a></li>
+<li><a href="#0x02-getting-started">0x02 Getting Started</a>
+<ul>
+<li><a href="#team-server-%E5%90%AF%E5%8A%A8">Team Server 启动</a></li>
+<li><a href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%90%AF%E5%8A%A8">客户端启动</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AElistener">设置Listener</a></li>
+<li><a href="#%E7%94%9F%E6%88%90stageless-payload">生成Stageless Payload</a></li>
+<li><a href="#%E8%82%89%E9%B8%A1%E4%B8%8A%E7%BA%BF">肉鸡上线</a></li>
+<li><a href="#%E4%BF%AE%E6%94%B9beacon%E7%9D%A1%E7%9C%A0%E6%97%B6%E9%97%B4">修改Beacon睡眠时间</a></li>
+<li><a href="#uac%E6%8F%90%E6%9D%83">UAC提权</a></li>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E6%B3%A8%E5%85%A5">进程注入</a></li>
+<li><a href="#%E9%94%AE%E7%9B%98%E7%9B%91%E5%90%AC">键盘监听</a></li>
+<li><a href="#%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE">屏幕截图</a></li>
+<li><a href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C">命令执行</a></li>
+</ul>
+</li>
+<li><a href="#0x03-%E8%BD%AC%E8%BD%BD">0x03 转载</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://siyuan-rao.github.io/msf-zhong-kiwi-mo-kuai-de-shi-yong/">
+              <h3 class="post-title">
+                MSF中Kiwi模块的使用
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://siyuan-rao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

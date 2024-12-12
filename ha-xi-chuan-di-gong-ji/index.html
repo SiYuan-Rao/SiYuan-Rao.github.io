@@ -1,0 +1,203 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>哈希传递攻击 | SiYuan-Rao</title>
+<link rel="shortcut icon" href="https://siyuan-rao.github.io/favicon.ico?v=1733983405965">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://siyuan-rao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="哈希传递攻击 | SiYuan-Rao - Atom Feed" href="https://siyuan-rao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="0x00 哈希传递攻击简介
+哈希传递攻击是基本NTLM认证的一种攻击方式。哈希传递攻击的利用前提是我们获取了某个用户的密码哈希值，但是解不开明文。这时我们可以利用NTLM认证的一种缺陷，利用用户的密码哈希值来进行NTLM认证。在域环境中，大..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://siyuan-rao.github.io">
+  <img class="avatar" src="https://siyuan-rao.github.io/images/avatar.png?v=1733983405965" alt="">
+  </a>
+  <h1 class="site-title">
+    SiYuan-Rao
+  </h1>
+  <p class="site-description">
+    <b>One is Team !</b>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              哈希传递攻击
+            </h2>
+            <div class="post-info">
+              <span>
+                2024-01-01
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h3 id="0x00-哈希传递攻击简介">0x00 哈希传递攻击简介</h3>
+<p>哈希传递攻击是基本NTLM认证的一种攻击方式。哈希传递攻击的利用前提是我们获取了某个用户的密码哈希值，但是解不开明文。这时我们可以利用NTLM认证的一种缺陷，利用用户的密码哈希值来进行NTLM认证。在域环境中，大量计算机在安装时会使用相同的本地管理员账户和密码。因此，如果计算机的本地管理员账号密码相同，攻击者就能使用哈希传递攻击内网中的其他机器。</p>
+<h4 id="哈希传递攻击适用情况">哈希传递攻击适用情况：</h4>
+<p>在工作组环境中：</p>
+<ul>
+<li>Windows Vista之前的机器可以使用本地管理员组内用户进行攻击。</li>
+<li>Windows Vista之后的机器只能是administrator用户的哈希值才能进行哈希传递攻击，其他用户（包括管理员用户但是非administrator）也不能使用哈希传递攻击，会提示拒绝访问。</li>
+</ul>
+<p>在域环境中，只能是域管理员组内用户（可以是域管理员组内非administrator用户）的哈希值才能进行哈希传递攻击，攻击成功后，可以访问域内任何一台机器。</p>
+<h3 id="0x01-哈希传递攻击">0x01 哈希传递攻击</h3>
+<h4 id="mimikatz进行哈希传递攻击工作组">mimikatz进行哈希传递攻击（工作组）</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1704107653663.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704107862704.png" alt="" loading="lazy"></p>
+<h4 id="mimikatz进行哈希传递攻击域">mimikatz进行哈希传递攻击（域）</h4>
+<p>在域环境中，当我们获得了域管理员组内用户的NTLM哈希值，我们可以使用域内的一台主机用mimikatz对域内任何一台机器（包括域控）进行哈希传递攻击。执行完命令后，会弹出CMD窗口，在弹出的CMD窗口我们可以访问域内任何一台机器。前提是我们必须拥有域内任意一台本机的本地管理员权限和域管理员的密码NTLM哈希值。<br>
+<img src="https://siyuan-rao.github.io/post-images/1704109045060.png" alt="" loading="lazy"></p>
+<h3 id="0x02-更新kb2871997补丁产生的影响">0x02 更新KB2871997补丁产生的影响</h3>
+<p>微软在2014年5月发布了KB2871997和KB2928120两个补丁。KB2871997针对PTH攻击，而KB2928120针对GPP（Group Policy Preference）。KB2871997补丁将使本地账号不再可以用于远程接入系统，不管是Network logon还是Interactive logon。其后果就是：无法通过本地管理员权限针对远程计算机使用Psexec、WMI、smbexec、IPC等，也无法访问远程主机的文件共享等。</p>
+<p>在实际测试中，更新KB2871997补丁之后，发现无法使用常规的哈希传递方法进行横向移动，但administrator（SID=500）账号例外，使用该账号的散列值依然可以进行哈希传递攻击。这里需要强调的是SID=500的账号。即使将administrator账号改名，也不会影响SID的值。所以，如果攻击者使用SID为500的账号进行哈希传递攻击，就不会受到KB2871997的影响。</p>
+<blockquote>
+<p>总结：其实KB2871997的补丁并没有多大的用处，由于在Windows Vista时代，微软就通过将LocalAccountTokenFilterPolicy值默认设置为0来禁止非administrator账号的远程连接（包括哈希传递攻击），但是administrator用户不受影响。即使目标主机更新了KB2871997补丁，仍然可以使用SID=500的用户进行哈希传递攻击，而SID=500的用户默认为administrator，所以仍然可以使用administrator用户进行哈希传递攻击。并且在打了KB2871997补丁的机器上，通过将LocalAccountTokenFilterPolicy设置为1，也还是可以使用普通管理员账号进行哈希传递攻击。</p>
+</blockquote>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#0x00-%E5%93%88%E5%B8%8C%E4%BC%A0%E9%80%92%E6%94%BB%E5%87%BB%E7%AE%80%E4%BB%8B">0x00 哈希传递攻击简介</a>
+<ul>
+<li><a href="#%E5%93%88%E5%B8%8C%E4%BC%A0%E9%80%92%E6%94%BB%E5%87%BB%E9%80%82%E7%94%A8%E6%83%85%E5%86%B5">哈希传递攻击适用情况：</a></li>
+</ul>
+</li>
+<li><a href="#0x01-%E5%93%88%E5%B8%8C%E4%BC%A0%E9%80%92%E6%94%BB%E5%87%BB">0x01 哈希传递攻击</a>
+<ul>
+<li><a href="#mimikatz%E8%BF%9B%E8%A1%8C%E5%93%88%E5%B8%8C%E4%BC%A0%E9%80%92%E6%94%BB%E5%87%BB%E5%B7%A5%E4%BD%9C%E7%BB%84">mimikatz进行哈希传递攻击（工作组）</a></li>
+<li><a href="#mimikatz%E8%BF%9B%E8%A1%8C%E5%93%88%E5%B8%8C%E4%BC%A0%E9%80%92%E6%94%BB%E5%87%BB%E5%9F%9F">mimikatz进行哈希传递攻击（域）</a></li>
+</ul>
+</li>
+<li><a href="#0x02-%E6%9B%B4%E6%96%B0kb2871997%E8%A1%A5%E4%B8%81%E4%BA%A7%E7%94%9F%E7%9A%84%E5%BD%B1%E5%93%8D">0x02 更新KB2871997补丁产生的影响</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://siyuan-rao.github.io/piao-ju-chuan-di-gong-ji/">
+              <h3 class="post-title">
+                票据传递攻击
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://siyuan-rao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

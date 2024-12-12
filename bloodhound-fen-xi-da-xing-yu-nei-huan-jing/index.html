@@ -1,0 +1,197 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BloodHound 分析大型域内环境 | SiYuan-Rao</title>
+<link rel="shortcut icon" href="https://siyuan-rao.github.io/favicon.ico?v=1733983405965">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://siyuan-rao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="BloodHound 分析大型域内环境 | SiYuan-Rao - Atom Feed" href="https://siyuan-rao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="MacOS 安装 BloodHound
+
+
+
+
+
+
+
+
+BloodHound 分析大型域内环境
+在本地安装完成 BloodHound 后，需要进行数据的采集与倒入。数据的采集使用 ps1 脚本或者 exe 程序收集，该项目地址为：https..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://siyuan-rao.github.io">
+  <img class="avatar" src="https://siyuan-rao.github.io/images/avatar.png?v=1733983405965" alt="">
+  </a>
+  <h1 class="site-title">
+    SiYuan-Rao
+  </h1>
+  <p class="site-description">
+    <b>One is Team !</b>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              BloodHound 分析大型域内环境
+            </h2>
+            <div class="post-info">
+              <span>
+                2023-10-24
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h3 id="macos-安装-bloodhound">MacOS 安装 BloodHound</h3>
+<p><img src="https://siyuan-rao.github.io/post-images/1698153685539.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1698153943062.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1698154079229.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1698154165750.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1698154236353.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1698154335302.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1698154571096.jpg" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1698154651651.jpg" alt="" loading="lazy"></p>
+<h3 id="bloodhound-分析大型域内环境">BloodHound 分析大型域内环境</h3>
+<p>在本地安装完成 BloodHound 后，需要进行数据的采集与倒入。数据的采集使用 ps1 脚本或者 exe 程序收集，该项目地址为：https://github.com/BloodHoundAD/BloodHound/tree/master/Collectors。</p>
+<h5 id="bloodhoundexe-采集数据">BloodHound.exe 采集数据</h5>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#macos-%E5%AE%89%E8%A3%85-bloodhound">MacOS 安装 BloodHound</a></li>
+<li><a href="#bloodhound-%E5%88%86%E6%9E%90%E5%A4%A7%E5%9E%8B%E5%9F%9F%E5%86%85%E7%8E%AF%E5%A2%83">BloodHound 分析大型域内环境</a><br>
+*
+<ul>
+<li><a href="#bloodhoundexe-%E9%87%87%E9%9B%86%E6%95%B0%E6%8D%AE">BloodHound.exe 采集数据</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://siyuan-rao.github.io/nei-wang-xin-xi-shou-ji/">
+              <h3 class="post-title">
+                内网信息收集
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://siyuan-rao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

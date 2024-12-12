@@ -1,0 +1,302 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>工作组和域的区别 | SiYuan-Rao</title>
+<link rel="shortcut icon" href="https://siyuan-rao.github.io/favicon.ico?v=1733983405965">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://siyuan-rao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="工作组和域的区别 | SiYuan-Rao - Atom Feed" href="https://siyuan-rao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="0x00 工作组
+工作组是局域网中的一个概念，它是最常见的资源管理模式，简单是因为默认情况下计算机都是采用工作组方式进行资源管理的。将不同的电脑按功能分别列入不同的组中，以方便管理。默认情况下所有计算机都处在名为WORKGROUP的工作组中..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://siyuan-rao.github.io">
+  <img class="avatar" src="https://siyuan-rao.github.io/images/avatar.png?v=1733983405965" alt="">
+  </a>
+  <h1 class="site-title">
+    SiYuan-Rao
+  </h1>
+  <p class="site-description">
+    <b>One is Team !</b>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              工作组和域的区别
+            </h2>
+            <div class="post-info">
+              <span>
+                2024-01-01
+              </span>
+              <span>
+                17 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h3 id="0x00-工作组">0x00 工作组</h3>
+<p>工作组是局域网中的一个概念，它是最常见的资源管理模式，简单是因为默认情况下计算机都是采用工作组方式进行资源管理的。将不同的电脑按功能分别列入不同的组中，以方便管理。默认情况下所有计算机都处在名为WORKGROUP的工作组中，工作组资源管理模式适合于网络中计算机不多，对管理要求不严格的情况。它的建立步骤简单，使用起来也很好上手。大部分中小公司都采取工作组的方式对资源进行权限划分和目录共享。相同组中的不同用户通过对方主机的用户名和密码可以查看对方共享的文件夹，默认共享的是Users目录。不同组的不同用户通过对方主机的用户名和密码也可以查看对方共享的文件夹。所以工作组并不存在真正的集中管理作用，工作组里的所有计算机都是对等的，也就是没有服务器和客户机之分。</p>
+<h3 id="0x01-工作组的加入和退出">0x01 工作组的加入和退出</h3>
+<h4 id="工作组的加入">工作组的加入</h4>
+<p>右击桌面上的“此电脑”，在弹出的菜单选择“属性”，点击右侧的“高级系统设置”，在“计算机名”一栏中点击“更改”，在“计算机名”中键入你想好的名称，在“工作组”中键入你想加入的工作组名称。如果你输入的工作组名称网络中没有，那么就相当于新建了一个工作组，当然暂时只有你的电脑在组内。单击“确定”按钮后，Windows提示需要重新启动，重新启动后，再进入“网络”就可以看到你所加入的工作组成员了。</p>
+<h4 id="工作组的退出">工作组的退出</h4>
+<p>只要将工作组名称改动即可。不过在网上别人照样可以访问你的共享资源。你也可以随便加入同一网络上的任何其它工作组。“工作组”就像一个可以自由进入和退出的“社团”，方便同一组的计算机相互访问。</p>
+<h3 id="0x02-工作组的访问">0x02 工作组的访问</h3>
+<p>点击桌面上的“网络”就可以查看到我们工作组中的其它计算机了，当你要访问某台计算机时，点它，然后输入该主机的用户名和密码即可看到该主机共享的文件夹。</p>
+<h3 id="0x03-工作组的优缺点">0x03 工作组的优缺点</h3>
+<p>优点：在一个网络内，可能有上百台电脑，如果这些电脑不进行分组，都列在“网上邻居”中，电脑无规则的排列为我们访问资源带来不方便。为了解决这一问题，Windows98操作系统之后就引用了“工作组”这个概念，将不同的电脑按功能分别列入不同的组中，如软件部的电脑都列入“软件部”工作组中，网络部的电脑都列入“网络部”工作组中。你要访问某个部门的资源，就在“网上邻居”里找到那个部门的工作组名，双击就可以看到那个部门的电脑了。计算机通过工作组进行分类，使得我们访问资源更加具有层次化。工作组情况下资源就可以相当随机和灵活的分布，更方便资源共享，管理员只需要实施相当低级的维护。</p>
+<p>缺点：缺乏集中管理与控制的机制，没有集中的统一账户管理，没有对资源实施更加高效率的集中管理，没有实施工作站的有效配置和安全性严密控制。只适合小规模用户的使用。</p>
+<p>基于以上缺点。当计算机数量比较多，大型企业中网络规模大，需要统一的管理和集中的身份验证，并且能够给用户提供方便的搜索和使用网络资源的方式，工作组的组织形式就不合适了，于是域就出现。</p>
+<h3 id="0x04-域">0x04 域</h3>
+<p>域用来描述一种架构，和“工作组”相对应，由工作组上级而来的高级架构，域（Domain）是一个有安全边界的计算机集合（安全边界，意思是在两个域中，一个域中的用户无法访问另一个域中的资源）。可以简单的把域理解成升级版的“工作组”，相比工作组而言，它有一个更加严格的安全管理控制机制，如果你想访问域内的资源，就必须拥有一个合法的身份登录到该域中，而你对该域内的资源拥有什么样的权限，还需要取决于你在该域中的用户身份。</p>
+<p>域的功能和特点：</p>
+<ul>
+<li>集中管理，可以集中地管理企业中成千上万分布于异地的计算机和用户。</li>
+<li>便捷的资源访问，能够很容易地定位到域中的资源。用户依次登录就可以访问整个网络资源，集中地身份验证。</li>
+<li>可拓展性，既可以适用于几十台计算机的小规模网络，也可以用于跨国公司。</li>
+</ul>
+<p>工作组和域的区别：工作组是对等网络，域是B/S架构，集中管理。<br>
+<img src="https://siyuan-rao.github.io/post-images/1704115276549.jpeg" alt="" loading="lazy"></p>
+<h3 id="0x05-域控dcdomain-control">0x05 域控DC（Domain Control）</h3>
+<p>在域架构中域控是用来管理所有客户端的服务器，它负责每一台联入的电脑和用户的验证工作，域内电脑如果想相互访问首先都得经过它的审核。域控就是域架构的核心，每个域控制器上都包含了AD活动目录数据库。一个域中可能应该要有至少两个域控。一个作为DC，一个是备份DC。如果没有第二个备份DC，那么一旦DC瘫痪了，则域内的其他用户就不能登录该域了，因为活动目录的数据库（包括用户的账号信息）存储在DC中。而有一台备份域控制器（B DC），则至少该域还能正常使用，期间把瘫痪的DC恢复了就行了。当域中的一台计算机安装了AD后，它就成了域控DC了。</p>
+<h3 id="0x06-活动目录adactive-directory">0x06 活动目录AD（Active Directory）</h3>
+<p>活动目录AD是域环境中提供目录服务的组件。在活动目录中，所有的网络对象信息以一种结构化的数据存储方式来保存，使得管理员和用户能够轻松地查找和使用这些信息。活动目录以这种结构化的数据存储方式作为基础，对目录信息进行合乎逻辑的分层组织。活动目录存储着有关网络对象（如用户、组、计算机、共享资源、打印机和联系人等）的信息。目录服务是帮助用户快速准确从目录中查找他所需要的信息的服务。安装有AD活动目录的服务器就是域控DC。</p>
+<p>如果将企业的内网看成一本字典，那么内网里的资源就是字典的内容，活动目录就相当于字典的索引。即活动目录存储的是网络中所有资源的快捷方式，用户通过寻找快捷方式而定位资源。</p>
+<p>在活动目录中记录的信息，被分为两大部分，一部分保存在活动目录数据库文件NTDS.dit中，另一部分保存在被复制的文件系统上。</p>
+<h4 id="ntdsdit">NTDS.dit</h4>
+<p>域用户账户以域数据库的形式保存在活动目录中，NTDS.dit是活动目录的数据库文件，该文件记录的信息有以下三张表：</p>
+<ul>
+<li>Schema表：这个表中包含了所有可在活动目录创建的对象信息以及它们之间的相互关系。包括各种类型对象的可选及不可选的各种属性。这个表是活动目录数据中最小的一个表，但是也是最基础的一个表。</li>
+<li>Link表：Link表包含所有属性的关联，包括活动目录中所有对象的属性的值。一个用户对象的所有属性的类型，包括每个属性的值及用户所属于的组等信息都属于这个表。这个表要大于Schema表，但与Data表相比要小。</li>
+<li>Data表：活动目录中用户，组，应用程序特殊数据和其他的数据全部保存在Data表中。这是活动目录中存储信息最多的一个表，大量的活动目录的资料实际上还是存储在这个表中。</li>
+</ul>
+<p>ntdsuti.exe是域控制器自带的域数据库管理工具，从Windows Server2008开始就默认自带了。因此我们可以通过ntdsutil.exe提取出域中所有的域用户信息。</p>
+<h4 id="逻辑结构">逻辑结构</h4>
+<p>在活动目录中，管理员可以完全忽略被管理对象的具体地理位置，而将这些对象按照一定的方式放置在不同的容器中。由于这种组织对象的做法不考虑被管理对象的具体物理位置，这种组织框架称为“逻辑机构”。</p>
+<h4 id="活动目录的主要功能">活动目录的主要功能</h4>
+<ul>
+<li>账号集中管理：所有账号均存在服务器上，方便对账号的重命令/重置密码。</li>
+<li>软件集中管理：统一推送软件，统一安装网络打印机等。利用软件发布策略分发软件，可以让用户自由选择安装软件。</li>
+<li>环境集中管理：利用AD可以统一客户端桌面，IE，TCP/IP等设置。</li>
+<li>增强安全性：统一部署杀毒软件和扫毒任务，集中化管理用户的计算机权限、统一制订用户密码策略等，可监控网络，资料统一管理。</li>
+<li>更可靠：更少的宕机时间。如：利用AD控制用户访问权限，利用集群、负载均衡等技术对文件服务器进行容灾设定，更可靠，宕机时间更少。</li>
+<li>活动目录为Microsoft统一管理的基础平台，其它ISA、Exchange、SMS等服务都依赖于这个基础平台。</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://siyuan-rao.github.io/post-images/1704118054775.png" alt="" loading="lazy"></figure>
+<ul>
+<li>Builtin容器：Builtin容器是Active Driectory默认创建的第一个容器，主要用于保存域中本地安全组。</li>
+<li>Computers容器：Computers容器是Active Driectory默认创建的第二个容器，用于存放Windows Server 2008域内所有成员计算机的计算机账号。</li>
+<li>Domain Controllers容器：Domian Controllers是一个特殊的容器，主要用于保存当前域控制器下创建的所有子域和辅助域。</li>
+<li>Users容器：Users容器主要用于保存安装Active Driectory时系统自动创建的用户和登录到当前域控制器的所有用户账户。</li>
+</ul>
+<h3 id="0x07-dns域名服务器">0x07 DNS域名服务器</h3>
+<p>域控服务器要求DNS服务器按名称查找计算机、成员服务器和网络服务。</p>
+<p>域名解析：DNS服务器通过其A记录将域名解析成IP地址。</p>
+<p>定位活动目录服务：客户机通过DNS服务器上的SRV服务记录定位提供某一个服务的计算机。</p>
+<p>一般情况下，我们在内网渗透时就通过寻找DNS服务器来定位域控制器，因为通常DNS服务器和域控制器会处在同一台机器上。</p>
+<p>SRV服务记录就是DNS服务器的数据库中支持的一种资源记录的类型，它记录了哪台计算机提供了哪个服务这个一个简单的信息。</p>
+<p>SRV服务记录：一般是为活动目录AD设置的应用。DNS可以独立于活动目录，但是活动目录必须有DNS的帮助才能工作。为了活动目录能够正常的工作，DNS服务器必须支持服务定位（SRV）资源记录，资源记录把服务名字映射为提供服务的服务器名字。域主机和域控制器使用SRV资源记录决定域控制器的IP地址和提供服务的服务器IP地址。</p>
+<h3 id="0x08-域结构">0x08 域结构</h3>
+<h4 id="单域">单域</h4>
+<p>在一般的具有固定物理位置的小公司里，建立一个域就可以满足所需。<br>
+<img src="https://siyuan-rao.github.io/post-images/1704118870524.jpeg" alt="" loading="lazy"></p>
+<h4 id="域树">域树</h4>
+<p>域树指若干域通过建立信任关系组成的集合。一个域管理员只能管理本域的内部，不能访问或者管理其他的域，两个域之间相互访问则需要建立信息关系（Trust Relation）。信任关系是连接在域与域之间的桥梁。<strong>父域与子域之间自动建立起了双向信任关系</strong>，域树内的父域与子域之间不但可以按需要相互管理，还可以跨网分配文件和打印机等设备资源，使不同的域之间实现网络资源的共享与管理，以及相互通信和数据传输。同一个域树中，父域和子域会自动创建双向信任关系，并且信任关系可传递。所有也就是如下：abc.com自动与asia.abc.com和europe.abc.com建立起了双向信任关系，asia.abc.com和cn.asia.abc.com以及europe.abc.com与fr.asia.ab.com自动建立起了双向信任关系。由于信任关系可以传递，所有cn.asia.abc.com和abc.com以及fr.asia.abc.com和abc.com都自动建立起了双向信任关系。但是asia.abc.com和europe.abc.com之间并没有建立起信任关系。所以也就是asia.abc.com和europe.abc.com之间不能进行数据共享等操作。它们之间要想进行数据共享等操作，需要手动为它们之间建立信任关系。<br>
+<img src="https://siyuan-rao.github.io/post-images/1704119540972.jpeg" alt="" loading="lazy"></p>
+<p>建立域树的好处：</p>
+<ul>
+<li>如果把不同地理位置的分公司放在同一个域内，那么它们之间信息交互（包括同步，复制等）所花费的时间会比较长，而且占用的带宽也比较大。（因为在同一域内，信息交互的条目是很多的，而且不压缩；而在域和域之间，信息交互的条目相对较少，而且压缩。）</li>
+<li>子公司可以通过自己的域来管理自己的资源。</li>
+<li>出于安全策略的考虑，因为每个域都有自己独有的安全策略。比如一个公司的财务部门希望能使用特定的安全策略（包括账号密码策略等），那么可以将财务部门做成一个子域来单独管理。</li>
+</ul>
+<p>在一个域树中，父域可以包含很多子域，子域是相对父域来说的，指域名中的每一个段。子域只能使用父域作为域名的后缀，也就说在一个域树中，域的名字是连续的。</p>
+<h4 id="父域与子域">父域与子域</h4>
+<p>第一域称为父域也可以叫根域，各分部的域称为该域的子域。<br>
+<img src="https://siyuan-rao.github.io/post-images/1704120400831.png" alt="" loading="lazy"></p>
+<blockquote>
+<p>父域与子域之间默认建立起了双向信任关系。</p>
+</blockquote>
+<h4 id="域林">域林</h4>
+<p>由一个或多个没有形成连续名称空间的域树组成，林中每个域树都有唯一的名称空间，之间不连续。域林指若干个域树通过建立信任关系组成的集合。可以通过域树之间建立的信任关系来管理和使用整个域林中的资源，从而又保持了原有域自身原有的特性。同一个林中，林根域与其他树根域自动建立双向信任关系，信任关系可传递。<br>
+<img src="https://siyuan-rao.github.io/post-images/1704121049116.jpeg" alt="" loading="lazy"></p>
+<h4 id="域信任关系">域信任关系</h4>
+<p>域之间的信任关系，相当于是不同域之间沟通的桥梁。域信任分为单向信任和双向信任。单向信任只能是受信任域访问信任域，而信任域不能访问受信息域。双向信息是两个域可以相互访问。</p>
+<ul>
+<li>父子信任：父域与子域之间自动建立起了双向信任关系，并且信任关系可以传递。</li>
+<li>树信任：同一个林中，林根域与其他树根域自动建立双向信任关系，信任关系可传递。</li>
+<li>快捷方式信息：为了加速认证流程而产生的信任关系。需要管理员手动建立，信任关系可向下传递。</li>
+<li>林信任：在不更改AD结构的情况下，让不同林之间可以相互访问资源，信任关系可向下传递。</li>
+<li>外部信任/跨林快捷方式信息：类似于同林内的快捷信任，单向信任，信任关系不可传递。</li>
+<li>领域信任：为了让AD跟非Windows系统的Kerberos建立关系而存在的信任。</li>
+</ul>
+<h4 id="域的原理">域的原理</h4>
+<p>其实可以把域和工作组联系起来理解，在工作组上你一切的设置比如在本机上进行各种策略，用户登录都是登录在本机的，密码是放在本机的数据库来验证的。而如果你的计算机加入域的话，各种策略是域控制器统一设定，用户名和密码也是放到域控制器去验证，也就是说你的账号密码（域用户）可以在同一个域的任何一台计算机登录。</p>
+<p>如果说工作组是“免费的旅店”，那么域（Domain）就是“星级的宾馆”；工作组可以随便出出进进，而域则需要严格控制。“域”的真正含义指的是服务器控制网络上的计算机是否加入计算机组合。一提到组合，势必需要严格的控制。所以实行严格的管理对网络安全是非常必要的。在对等网模式下，任何一台电脑只要计入网络，其他机器就都可以访问共享资源，如共享文件夹等。尽管对等网络上的共享文件可以加访问密码，但是非常容易被破解。</p>
+<p>不过在“域”模式下，至少有一台服务器负责每一台联入网络的电脑和用户的验证工作，相当于一个单位的门卫一样，称为“域控制器（Domain Controller，简写为DC）”。</p>
+<p>域控制器中包含了这个域内的账户、密码、域内的计算机等信息构成的数据库（AD）。当电脑联入网络时，域控制器首先要鉴别这台电脑是否属于这个域，使用的登录账号是否存在、密码是否正确。如果以上信息有一样不正确，那么域控制器就会拒绝这个用户从这台电脑登录。不能登录，用户就不能访问服务器上有权限保护的资源，他只能以对等网用户的方式访问Windows共享出来的资源，这样就在一定程度上保护了网络上的资源。</p>
+<p>要把一台电脑加入域，仅仅使它和服务器在网上邻居中能够相互“看”到是远远不够的，必须要由网络管理员进行相应的设置，把这台电脑加入到域中。这样才能实现文件的共享，集中统一，便于管理。</p>
+<blockquote>
+<p>在域控上，即使以域管理员的身份登录，也不能查看域成员的密码，可以给域成员重置密码，但是不能查看域成员的密码。</p>
+</blockquote>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#0x00-%E5%B7%A5%E4%BD%9C%E7%BB%84">0x00 工作组</a></li>
+<li><a href="#0x01-%E5%B7%A5%E4%BD%9C%E7%BB%84%E7%9A%84%E5%8A%A0%E5%85%A5%E5%92%8C%E9%80%80%E5%87%BA">0x01 工作组的加入和退出</a>
+<ul>
+<li><a href="#%E5%B7%A5%E4%BD%9C%E7%BB%84%E7%9A%84%E5%8A%A0%E5%85%A5">工作组的加入</a></li>
+<li><a href="#%E5%B7%A5%E4%BD%9C%E7%BB%84%E7%9A%84%E9%80%80%E5%87%BA">工作组的退出</a></li>
+</ul>
+</li>
+<li><a href="#0x02-%E5%B7%A5%E4%BD%9C%E7%BB%84%E7%9A%84%E8%AE%BF%E9%97%AE">0x02 工作组的访问</a></li>
+<li><a href="#0x03-%E5%B7%A5%E4%BD%9C%E7%BB%84%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9">0x03 工作组的优缺点</a></li>
+<li><a href="#0x04-%E5%9F%9F">0x04 域</a></li>
+<li><a href="#0x05-%E5%9F%9F%E6%8E%A7dcdomain-control">0x05 域控DC（Domain Control）</a></li>
+<li><a href="#0x06-%E6%B4%BB%E5%8A%A8%E7%9B%AE%E5%BD%95adactive-directory">0x06 活动目录AD（Active Directory）</a>
+<ul>
+<li><a href="#ntdsdit">NTDS.dit</a></li>
+<li><a href="#%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84">逻辑结构</a></li>
+<li><a href="#%E6%B4%BB%E5%8A%A8%E7%9B%AE%E5%BD%95%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD">活动目录的主要功能</a></li>
+</ul>
+</li>
+<li><a href="#0x07-dns%E5%9F%9F%E5%90%8D%E6%9C%8D%E5%8A%A1%E5%99%A8">0x07 DNS域名服务器</a></li>
+<li><a href="#0x08-%E5%9F%9F%E7%BB%93%E6%9E%84">0x08 域结构</a>
+<ul>
+<li><a href="#%E5%8D%95%E5%9F%9F">单域</a></li>
+<li><a href="#%E5%9F%9F%E6%A0%91">域树</a></li>
+<li><a href="#%E7%88%B6%E5%9F%9F%E4%B8%8E%E5%AD%90%E5%9F%9F">父域与子域</a></li>
+<li><a href="#%E5%9F%9F%E6%9E%97">域林</a></li>
+<li><a href="#%E5%9F%9F%E4%BF%A1%E4%BB%BB%E5%85%B3%E7%B3%BB">域信任关系</a></li>
+<li><a href="#%E5%9F%9F%E7%9A%84%E5%8E%9F%E7%90%86">域的原理</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://siyuan-rao.github.io/ha-xi-chuan-di-gong-ji/">
+              <h3 class="post-title">
+                哈希传递攻击
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://siyuan-rao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

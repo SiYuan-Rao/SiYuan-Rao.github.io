@@ -1,0 +1,221 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Filter | SiYuan-Rao</title>
+<link rel="shortcut icon" href="https://siyuan-rao.github.io/favicon.ico?v=1733983405965">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://siyuan-rao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Filter | SiYuan-Rao - Atom Feed" href="https://siyuan-rao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="0x01 Filter 简介
+
+概念：Filter 表示过滤器，是 JavaWeb 三大组件（Servlet、Filter、Listener）之一。
+过滤器可以把对资源的请求拦截下来，从而实现一些特殊的功能。
+过滤器一般完成一些通用的操作，..." />
+    <meta name="keywords" content="JavaWeb" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://siyuan-rao.github.io">
+  <img class="avatar" src="https://siyuan-rao.github.io/images/avatar.png?v=1733983405965" alt="">
+  </a>
+  <h1 class="site-title">
+    SiYuan-Rao
+  </h1>
+  <p class="site-description">
+    <b>One is Team !</b>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Filter
+            </h2>
+            <div class="post-info">
+              <span>
+                2023-02-26
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+                <a href="https://siyuan-rao.github.io/tag/JavaWeb/" class="post-tag">
+                  # JavaWeb
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h3 id="0x01-filter-简介">0x01 Filter 简介</h3>
+<ul>
+<li>概念：Filter 表示过滤器，是 JavaWeb 三大组件（Servlet、Filter、Listener）之一。</li>
+<li>过滤器可以把对资源的请求拦截下来，从而实现一些特殊的功能。</li>
+<li>过滤器一般完成一些通用的操作，比如：权限控制、统一编码处理、敏感字符处理等等......</li>
+</ul>
+<h3 id="0x02-filter-快速入门">0x02 Filter 快速入门</h3>
+<ol>
+<li>定义类，实现 Filter 接口，并重写其方法。</li>
+<li>配置 Filter 拦截资源的路径：在类上定义 @WebFilter 注解。</li>
+<li>在 doFilter 方法中执行需求操作，并放行。</li>
+</ol>
+<pre><code class="language-java">@WebFilter(&quot;/*&quot;)
+public class FilterDemo implements Filter{
+    public void init(FilterConfig filterConfig) throws ServletException {
+
+    }
+
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+
+    }
+
+    public void destroy() {
+
+    }
+}
+</code></pre>
+<h3 id="0x03-filter-拦截路径配置">0x03 Filter 拦截路径配置</h3>
+<p>Filter 可以根据需求，配置不同的拦截资源路径。</p>
+<pre><code class="language-java">@WebFilter(&quot;/*&quot;)
+public class FilterDemo
+</code></pre>
+<ul>
+<li>拦截具体的资源：/index.jsp：只有访问 index.jsp 时才会被拦截。</li>
+<li>目录拦截：/user/*：访问 /user 下的所有资源都会被拦截。</li>
+<li>后缀名拦截：*.jsp：访问后缀名为 jsp 的资源都会被拦截。</li>
+<li>拦截所有：/*：访问所有资源都会被拦截。</li>
+</ul>
+<h3 id="0x04-过滤器链">0x04 过滤器链</h3>
+<p>🚩注解配置的 Filter，优先级按照过滤器类名（字符串）的自然排序。<br>
+一个 Web 应用可以配置多个过滤器，这多个过滤器称为过滤器链。</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#0x01-filter-%E7%AE%80%E4%BB%8B">0x01 Filter 简介</a></li>
+<li><a href="#0x02-filter-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8">0x02 Filter 快速入门</a></li>
+<li><a href="#0x03-filter-%E6%8B%A6%E6%88%AA%E8%B7%AF%E5%BE%84%E9%85%8D%E7%BD%AE">0x03 Filter 拦截路径配置</a></li>
+<li><a href="#0x04-%E8%BF%87%E6%BB%A4%E5%99%A8%E9%93%BE">0x04 过滤器链</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://siyuan-rao.github.io/jsp-fen-lei/">
+              <h3 class="post-title">
+                JSP 分类
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://siyuan-rao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

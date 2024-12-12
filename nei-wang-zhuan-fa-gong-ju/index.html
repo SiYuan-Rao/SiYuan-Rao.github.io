@@ -1,0 +1,188 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>内网转发工具 | SiYuan-Rao</title>
+<link rel="shortcut icon" href="https://siyuan-rao.github.io/favicon.ico?v=1733983405965">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://siyuan-rao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="内网转发工具 | SiYuan-Rao - Atom Feed" href="https://siyuan-rao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="0x00 内网转发
+在渗透测试中，当我们获得了外网服务器（如Web服务器，FTP服务器，Mail服务器等等）的一定权限后发现这台服务器可以直接访问或者间接的访问内网。此时渗透测试进入后渗透阶段，一般情况下，内网中的其他机器是不允许外网机器访..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://siyuan-rao.github.io">
+  <img class="avatar" src="https://siyuan-rao.github.io/images/avatar.png?v=1733983405965" alt="">
+  </a>
+  <h1 class="site-title">
+    SiYuan-Rao
+  </h1>
+  <p class="site-description">
+    <b>One is Team !</b>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              内网转发工具
+            </h2>
+            <div class="post-info">
+              <span>
+                2024-01-15
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h3 id="0x00-内网转发">0x00 内网转发</h3>
+<p>在渗透测试中，当我们获得了外网服务器（如Web服务器，FTP服务器，Mail服务器等等）的一定权限后发现这台服务器可以直接访问或者间接的访问内网。此时渗透测试进入后渗透阶段，一般情况下，内网中的其他机器是不允许外网机器访问的。这时候，我们可以通过端口转发（隧道）或将这台外网服务器设置成代理，使得我们自己的攻击机可以直接访问与操作内网中的其他机器。实现这一过程的手段就叫做内网转发。</p>
+<p>那又有很多人会问了，为什么不直接通过登录服务器来对内网中其他机器进行渗透，而是通过内网转发呢？</p>
+<p>大部分时候我们获取到的服务器的权限不够，无法直接登录。如果直接登录服务器中进行操作，我们需要上传工具进行很多操作，如果服务器缺少对应的环境变量或者组件，会导致渗透受阻。而且远程登录会留下比较明显的痕迹，因此内网转发是我们最好的选择，在本机进行操作是最方便的。</p>
+<p>常见内网转发工具的分类：</p>
+<ul>
+<li>按照协议进行分类，可以分为：Socks协议和Socket协议。</li>
+<li>按照工具工作原理分类分为：端口转发类（隧道）和Web代理类。<br>
+<img src="https://siyuan-rao.github.io/post-images/1705288566221.png" alt="" loading="lazy"></li>
+</ul>
+<h3 id="0x01-regeorg结合proxychains代理链http隧道">0x01 reGeorg结合proxychains代理链（HTTP隧道）</h3>
+<p>reGeory适用于公网服务器只开放了80端口的情况。</p>
+<p>reGeory是用Python写的利用Web进行代理的工具，流量只通过HTTP传输，也就是HTTP隧道。</p>
+<p>现在有这么一个环境，我们获取到了位于公网Web服务器的权限，或者我们拥有可以往公网Web服务器Web目录下上传下载任何文件的权限，但是该服务器开启了防火墙，只开放了80端口。内网中存在另外一台主机，这里假设内网存在一台Web服务器。然后，我们现在要将公网Web服务器设置为代理，通过公网服务器的80端口，访问和探测Web服务器的信息。</p>
+<h3 id="0x02-ewearthworm结合proxychains代理链">0x02 EW（EarthWorm）结合Proxychains代理链</h3>
+<p>EW是一套便携式的网络穿透工具，具有SOCKS5服务架设和端口转发两大核心功能，可在复杂网络环境下完成网络穿透。该工具能够以“正向”、“反向”、“多级级联”等方式打通一条网络隧道，直达网络深处，用蚯蚓独有的手段突破网络限制，给防火墙松土。工具包中提供了多种可执行文件，以适用不同的操作系统，Linux、Windows、MacOS、Arm-Linux均被包括其内，跨平台，任何平台都可以轻松使用！</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#0x00-%E5%86%85%E7%BD%91%E8%BD%AC%E5%8F%91">0x00 内网转发</a></li>
+<li><a href="#0x01-regeorg%E7%BB%93%E5%90%88proxychains%E4%BB%A3%E7%90%86%E9%93%BEhttp%E9%9A%A7%E9%81%93">0x01 reGeorg结合proxychains代理链（HTTP隧道）</a></li>
+<li><a href="#0x02-ewearthworm%E7%BB%93%E5%90%88proxychains%E4%BB%A3%E7%90%86%E9%93%BE">0x02 EW（EarthWorm）结合Proxychains代理链</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://siyuan-rao.github.io/duan-kou-zhuan-fa-yu-duan-kou-ying-she/">
+              <h3 class="post-title">
+                端口转发与端口映射
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://siyuan-rao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

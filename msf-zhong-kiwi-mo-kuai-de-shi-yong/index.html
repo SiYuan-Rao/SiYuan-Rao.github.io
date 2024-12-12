@@ -1,0 +1,208 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MSF中Kiwi模块的使用 | SiYuan-Rao</title>
+<link rel="shortcut icon" href="https://siyuan-rao.github.io/favicon.ico?v=1733983405965">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://siyuan-rao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="MSF中Kiwi模块的使用 | SiYuan-Rao - Atom Feed" href="https://siyuan-rao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="0x00 Kiwi模块
+使用Kiwi模块需要System权限，所以我们在使用该模块之前需要将当前MSF的Shell提升为System。提到System有两个办法，一是当前权限是Administrator用户，二是利用其它手段先提权到admi..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://siyuan-rao.github.io">
+  <img class="avatar" src="https://siyuan-rao.github.io/images/avatar.png?v=1733983405965" alt="">
+  </a>
+  <h1 class="site-title">
+    SiYuan-Rao
+  </h1>
+  <p class="site-description">
+    <b>One is Team !</b>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              MSF中Kiwi模块的使用
+            </h2>
+            <div class="post-info">
+              <span>
+                2024-01-21
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h3 id="0x00-kiwi模块">0x00 Kiwi模块</h3>
+<p>使用Kiwi模块需要System权限，所以我们在使用该模块之前需要将当前MSF的Shell提升为System。提到System有两个办法，一是当前权限是Administrator用户，二是利用其它手段先提权到administrator用户。然后Administrator用户可以直接执行Getsystem命令到System权限。<br>
+<img src="https://siyuan-rao.github.io/post-images/1705835658215.png" alt="" loading="lazy"></p>
+<p>Kiwi模块同时支持32位和64位的系统，但是该模块默认是加载32位的系统，所以如果目标主机是64位系统的话，直接默认加载该模块会导致很多功能无法使用。所以如果目标系统是64位的，则必须先查看系统进程列表，然后将Meterpreter进程迁移到一个64位程序的进程中，才能加载Kiwi并且查看系统明文密码。如果目标系统是32位的，则没有这个限制。<br>
+<img src="https://siyuan-rao.github.io/post-images/1705836268097.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1705836274355.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1705836281497.png" alt="" loading="lazy"></p>
+<h3 id="0x01-kiwi模块的使用">0x01 Kiwi模块的使用</h3>
+<p>加载Kiwi模块：load kiwi<br>
+<img src="https://siyuan-rao.github.io/post-images/1705838995028.png" alt="" loading="lazy"><br>
+查看Kiwi模块的使用：help kiwi<br>
+<img src="https://siyuan-rao.github.io/post-images/1705839127153.png" alt="" loading="lazy"></p>
+<ul>
+<li>creds_all：列举所有凭据</li>
+<li>creds_kerberos：列举所有kerberos凭据</li>
+<li>creds_msv：列举所有msv凭据</li>
+<li>creds_ssp：列举所有ssp凭据</li>
+<li>creds_tspkg：列举所有tspkg凭据</li>
+<li>creds_wdigest：列举所有wdigest凭据</li>
+<li>dcsync：通过DCSync检索用户帐户信息</li>
+<li>dcsync_ntlm：通过DCSync检索用户帐户NTLM散列、SID和RID</li>
+<li>golden_ticket_create：创建黄金票据</li>
+<li>kerberos_ticket_list：列举kerberos票据</li>
+<li>kerberos_ticket_purge：清除kerberos票据</li>
+<li>kerberos_ticket_use：使用kerberos票据</li>
+<li>kiwi_cmd：执行mimikatz的命令，后面接mimikatz.exe的命令</li>
+<li>lsa_dump_sam：dump出lsa的SAM</li>
+<li>lsa_dump_secrets：dump出lsa的密文</li>
+<li>password_change：修改密码</li>
+<li>wifi_list：列出当前用户的wifi配置文件</li>
+<li>wifi_list_shared：列出共享wifi配置文件/编码<br>
+<img src="https://siyuan-rao.github.io/post-images/1705839619061.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1705839681463.png" alt="" loading="lazy"></li>
+</ul>
+<h3 id="参考">参考</h3>
+<p>谢公子学安全 - 工具的使用 | MSF中kiwi模块的使用</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#0x00-kiwi%E6%A8%A1%E5%9D%97">0x00 Kiwi模块</a></li>
+<li><a href="#0x01-kiwi%E6%A8%A1%E5%9D%97%E7%9A%84%E4%BD%BF%E7%94%A8">0x01 Kiwi模块的使用</a></li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://siyuan-rao.github.io/nei-wang-zhuan-fa-gong-ju/">
+              <h3 class="post-title">
+                内网转发工具
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://siyuan-rao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

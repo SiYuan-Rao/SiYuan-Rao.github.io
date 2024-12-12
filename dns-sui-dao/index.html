@@ -1,0 +1,257 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DNS隧道 | SiYuan-Rao</title>
+<link rel="shortcut icon" href="https://siyuan-rao.github.io/favicon.ico?v=1733983405965">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://siyuan-rao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="DNS隧道 | SiYuan-Rao - Atom Feed" href="https://siyuan-rao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="0x00 DNS隧道
+DNS隧道（DNS Tunneling）是将其他协议的内容封装到DNS协议中，然后以DNS请求和响应包完成传输数据（通信）的技术。当前网络时间中DNS是一项必不可少的服务，所以防火墙和入侵检测设备处于可用性和用户友好的..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://siyuan-rao.github.io">
+  <img class="avatar" src="https://siyuan-rao.github.io/images/avatar.png?v=1733983405965" alt="">
+  </a>
+  <h1 class="site-title">
+    SiYuan-Rao
+  </h1>
+  <p class="site-description">
+    <b>One is Team !</b>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              DNS隧道
+            </h2>
+            <div class="post-info">
+              <span>
+                2024-01-07
+              </span>
+              <span>
+                5 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h3 id="0x00-dns隧道">0x00 DNS隧道</h3>
+<p>DNS隧道（DNS Tunneling）是将其他协议的内容封装到DNS协议中，然后以DNS请求和响应包完成传输数据（通信）的技术。当前网络时间中DNS是一项必不可少的服务，所以防火墙和入侵检测设备处于可用性和用户友好的考虑大都不会过滤DNS流量，也为DNS成为隐蔽信道创造了条件，因此，DNS隧道在僵尸网络和APT攻击中扮演者重要的角色。</p>
+<h3 id="0x01-dns隧道原理">0x01 DNS隧道原理</h3>
+<p>在进行DNS查询时，如果查询的域名不在DNS服务器本机的缓存中，就会访问互联网进行查询，然后返回结果。如果在互联网上有一台定制的服务器，那么依靠DNS协议即可进行数据包的交换。从DNS协议的角度看，这样的操作只是在一次次查询某个特定的域名并得到解析结果，但其本质问题是，预期的返回结果应该是一个IP地址，而事实上不是--返回的可以是任意字符串，包括加密的C&amp;C指令。</p>
+<p>DNS隧道分为两种：<br>
+直连模式：客户端直接向指定IP地址的DNS服务器发起DNS解析请求。</p>
+<p>中继模式：DNS经过互联网的迭代解析，指向指定的DNS服务器。</p>
+<p>区别在于直连模式速度相对快，但安全性相对较差。非直连模式速度相对较慢，但安全性相对较高。大多数情况下都使用中继模式。</p>
+<blockquote>
+<p>另外直连方式的限制比较多，如目前很多的企业网络为了尽可能的降低遭受网络攻击的风险，一般将相关策略配置为仅允许与指定的可信任DNS服务器之间的流量通过。</p>
+</blockquote>
+<h3 id="0x01-dnscat2">0x01 dnscat2</h3>
+<p>dnscat2是一款开源软件，使用DNS协议创建加密的C&amp;C通道，通过预共享密钥进行身份验证。使用Shell及DNS查询类型(TXT、MX、CNAME、A、AAAA)，多个同时进行的会话类似于SSH中的隧道。dnscat2的客户端是有Windows版和Linux版，服务端是用Ruby语言编写的。严格的说，dnscat2是一个命令与控制工具。</p>
+<p>使用dnscat2隧道的模式有两种，分别是直连模式和中继模式。直连模式：客户端直接向指定IP地址的DNS服务器发起DNS解析请求；中继模式：DNS经过互联网的迭代解析，指向指定的DNS服务器。与直连模式相比，中继模式的速度较慢。</p>
+<p>如果目标内网放行所有的DNS请求，dnscat2会使用直连模式，通过UDP的53端口进行通信(不需要域名，速度快，而且看上去仍然像普通的DNS查询)。在请求日志中，所有的域名都是以dnscat开头的，因此防火墙可以很容易地将直连模式的通信检测出来。</p>
+<p>如果目标内网的请求仅限于白名单服务器或指定的域，dnscat2会使用中继模式来申请一个域名，并将运行dnscat2服务端的服务器指定为受信任的DNS服务器。</p>
+<p>DNS隧道的应用场景如下：在安全策略严格的内网环境中，常见的C&amp;C通信端口会被众多安全设备所监控，该网段只允许白名单流量出站，同时其他端口都被屏蔽，传统的C&amp;C通信无法建立。这种情况下，可以通过使用DNS建立隐蔽隧道来进行通信。</p>
+<p>dnscat2通过DNS进行控制并执行命令。与同类工具相比，dnscat2具有如下特点：</p>
+<ul>
+<li>支持多个会话</li>
+<li>流量加密</li>
+<li>使用密钥防止MITM攻击</li>
+<li>在内存中直接执行PowerShell脚本</li>
+<li>隐蔽通信</li>
+</ul>
+<h4 id="部署域名解析">部署域名解析</h4>
+<figure data-type="image" tabindex="1"><img src="https://siyuan-rao.github.io/post-images/1704973030691.png" alt="" loading="lazy"></figure>
+<p>NS记录用于设置某个子域名的DNS服务器。<br>
+<img src="https://siyuan-rao.github.io/post-images/1704973247064.png" alt="" loading="lazy"></p>
+<h4 id="服务端安装">服务端安装</h4>
+<pre><code class="language-shell">git clone https://github.com/iagox86/dnscat2.git
+cd dnscat2/server/
+gem install bundler
+bundle install
+</code></pre>
+<h4 id="客户端安装">客户端安装</h4>
+<p>dnscat2客户端在使用前需要进行编译才能使用，在Windows中可以使用VS进行编译或者直接使用 PowerShell（目标机器需要支持PowerShell 2.0以上版本）的版本，Linux 中可以使用 make 进行编译。</p>
+<p>PowerShell版本：https://github.com/lukebaggett/dnscat2-powershell<br>
+Windows版本：https://downloads.skullsecurity.org/dnscat2/</p>
+<p>Linux安装dnscat2客户端：</p>
+<pre><code class="language-shell">git clone https://github.com/iagox86/dnscat2.git
+cd dnscat2/client/
+make
+</code></pre>
+<h4 id="测试客户端服务端是否连通">测试客户端服务端是否连通</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1704974474082.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704974530576.png" alt="" loading="lazy"></p>
+<h4 id="中继模式建立隧道">中继模式建立隧道</h4>
+<p><img src="https://siyuan-rao.github.io/post-images/1704974762296.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704974825321.png" alt="" loading="lazy"></p>
+<h4 id="执行命令">执行命令</h4>
+<ul>
+<li>sessions：查看当前建立的session</li>
+<li>windows：查看当前建立的session（如同sessions）</li>
+<li>session -i 1：进入第一个session</li>
+<li>window -i 1：进入第一个session</li>
+<li>help：查看命令帮助</li>
+<li>clear：清屏</li>
+<li>delay：修改远程响应延迟</li>
+<li>exec：执行远程机器上指定的程序，例如PowerShell。</li>
+<li>shell：反弹shell</li>
+<li>download、upload：下载、上传文件，速度较慢，适合小文件。</li>
+<li>suspend：返回上一层，相当于快捷键 Ctrl + z。</li>
+<li>listen：类似于SSH隧道的 -L 参数（本地转发）</li>
+<li>ping：用于确认目标机器是否在线，若返回pong，说明目标机器在线。</li>
+<li>shutdown：切断当前会话</li>
+<li>quit：退出dnscat2控制台</li>
+<li>kill id：切断指定id通道</li>
+<li>set：设置值，例如设置 security=open。<br>
+<img src="https://siyuan-rao.github.io/post-images/1704974966845.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704975332116.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1704975337911.png" alt="" loading="lazy"></li>
+</ul>
+<h3 id="参考">参考</h3>
+<p>https://www.cnblogs.com/yokan/p/15183039.html</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#0x00-dns%E9%9A%A7%E9%81%93">0x00 DNS隧道</a></li>
+<li><a href="#0x01-dns%E9%9A%A7%E9%81%93%E5%8E%9F%E7%90%86">0x01 DNS隧道原理</a></li>
+<li><a href="#0x01-dnscat2">0x01 dnscat2</a>
+<ul>
+<li><a href="#%E9%83%A8%E7%BD%B2%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90">部署域名解析</a></li>
+<li><a href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%AE%89%E8%A3%85">服务端安装</a></li>
+<li><a href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AE%89%E8%A3%85">客户端安装</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%98%AF%E5%90%A6%E8%BF%9E%E9%80%9A">测试客户端服务端是否连通</a></li>
+<li><a href="#%E4%B8%AD%E7%BB%A7%E6%A8%A1%E5%BC%8F%E5%BB%BA%E7%AB%8B%E9%9A%A7%E9%81%93">中继模式建立隧道</a></li>
+<li><a href="#%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4">执行命令</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://siyuan-rao.github.io/icmp-sui-dao/">
+              <h3 class="post-title">
+                ICMP隧道
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://siyuan-rao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

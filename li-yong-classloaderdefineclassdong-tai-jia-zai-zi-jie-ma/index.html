@@ -1,0 +1,220 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>利用ClassLoader#defineClass()动态加载字节码 | SiYuan-Rao</title>
+<link rel="shortcut icon" href="https://siyuan-rao.github.io/favicon.ico?v=1733983405965">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://siyuan-rao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="利用ClassLoader#defineClass()动态加载字节码 | SiYuan-Rao - Atom Feed" href="https://siyuan-rao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="0x00 转载
+https://blog.csdn.net/Thunderclap_/article/details/128914911
+0x01 利用ClassLoader#defineClass()直接加载字节码
+不管加载远程class..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://siyuan-rao.github.io">
+  <img class="avatar" src="https://siyuan-rao.github.io/images/avatar.png?v=1733983405965" alt="">
+  </a>
+  <h1 class="site-title">
+    SiYuan-Rao
+  </h1>
+  <p class="site-description">
+    <b>One is Team !</b>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              利用ClassLoader#defineClass()动态加载字节码
+            </h2>
+            <div class="post-info">
+              <span>
+                2023-04-23
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h3 id="0x00-转载">0x00 转载</h3>
+<p>https://blog.csdn.net/Thunderclap_/article/details/128914911</p>
+<h3 id="0x01-利用classloaderdefineclass直接加载字节码">0x01 利用ClassLoader#defineClass()直接加载字节码</h3>
+<p>不管加载远程class文件，还是本地的class或jar文件，Java都经历的是下面这三个方法调用。<br>
+<img src="https://siyuan-rao.github.io/post-images/1682216567975.png" alt="" loading="lazy"></p>
+<ul>
+<li>loadClass()的作用是从已加载的类缓存、父加载器等位置寻找类（这里实际上是双亲委派机制），在前面没有找到的情况下，执行findClass()。</li>
+<li>findClass()的作用根据基础URL指定的方式来加载类的字节码，可能会在本地文件系统，jar包或远程 HTTP 服务器上读取字节码，然后交给defineClass()。</li>
+<li>defineClass()的作用是处理前面传入的字节码，将其处理成真正的Java类。</li>
+</ul>
+<pre><code class="language-java">protected final Class&lt;?&gt; defineClass(String name, byte[] b, int off, int len)
+// name – The expected binary name of the class, or null if not known（类的预期二进制名称，如果不知道，则为空）。
+// b – The bytes that make up the class data. The bytes in positions off through off+len-1 should have the format of a valid class file as defined by The Java™ Virtual Machine Specification.
+// off – The start offset in b of the class data（类数据在b中的开始偏移量）。
+// len – The length of the class data（类数据的长度）。
+ 
+// name 为类名 (可设置为 null)。
+// b 为字节码数组
+// off 为数组的偏移值 (从第几位开始为字节码数据)。
+// len 为数组的长度
+</code></pre>
+<p>所以可见，真正核心的部分其实是defineClass()，它决定了如何将一段字节流转变成一个Java类。</p>
+<p>注意一点，在defineClass()被调用的时候，类对象是不会被初始化的，只有这个对象显示地调用其构造函数，初始化代码才能被执行。而且，即时我们将初始化代码放在类的static块中，在defineClass()时也无法被直接调用到。所以，如果我们要使用defineClass()在目标机器上执行任意代码，需要想办法调用构造函数。</p>
+<p>因为系统的ClassLoader#defineClass() 的权限是 protected 属性，所以我们无法直接在外部访问，不得不使用反射的形式来调用。在实际场景中，因为defineClass方法作用域是不开放的，所以攻击者很少能直接利用到它，但它却是我们常用的一个攻击链TemplatesImpl的基石。</p>
+<p>获取ClassLoader，以下常用几种获取ClassLoader的方式：</p>
+<pre><code class="language-java">ClassLoader loader = Thread.currentThread().getContextClassLoader();
+ 
+ClassLoader loader = ClassLoader.getSystemClassLoader();
+ 
+ClassLoader loader = this.getClass().getClassLoader();
+</code></pre>
+<p>举例：</p>
+<pre><code class="language-java">public class HelloDefineClass {
+    public static void main(String[] args) throws Exception {
+        Method defineClass = ClassLoader.class.getDeclaredMethod(&quot;defineClass&quot;, String.class, byte[].class, int.class, int.class);        // 注意 getDeclaredMethod 只能获取当前类的所有方法, 而 defineClass 其实是在 AppClassLoader 的父类 java.lang.ClassLoader 里面, 所以需要通过 ClassLoader.class 来获取 Class 对象
+ 
+        defineClass.setAccessible(true);
+ 
+        byte[] code = Base64.getDecoder().decode(&quot;yv66vgAAADcAHgoABwAQCQARABIIABMKABQAFQcAFgoABQAQBwAXAQAGPGluaXQ+AQADKClWAQAEQ29kZQEAD0xpbmVOdW1iZXJUYWJsZQEABG1haW4BABYoW0xqYXZhL2xhbmcvU3RyaW5nOylWAQAKU291cmNlRmlsZQEACkhlbGxvLmphdmEMAAgACQcAGAwAGQAaAQAMSGVsbG8gV29ybGQhBwAbDAAcAB0BAAVIZWxsbwEAEGphdmEvbGFuZy9PYmplY3QBABBqYXZhL2xhbmcvU3lzdGVtAQADb3V0AQAVTGphdmEvaW8vUHJpbnRTdHJlYW07AQATamF2YS9pby9QcmludFN0cmVhbQEAB3ByaW50bG4BABUoTGphdmEvbGFuZy9TdHJpbmc7KVYAIQAFAAcAAAAAAAIAAQAIAAkAAQAKAAAALQACAAEAAAANKrcAAbIAAhIDtgAEsQAAAAEACwAAAA4AAwAAAAIABAADAAwABAAJAAwADQABAAoAAAAlAAIAAgAAAAm7AAVZtwAGTLEAAAABAAsAAAAKAAIAAAAHAAgACAABAA4AAAACAA8=&quot;);
+ 
+        Class hello = (Class)defineClass.invoke(ClassLoader.getSystemClassLoader(), &quot;Hello&quot;, code, 0, code.length);
+ 
+        hello.newInstance();
+    }
+}
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://siyuan-rao.github.io/post-images/1682219665690.jpg" alt="" loading="lazy"></figure>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#0x00-%E8%BD%AC%E8%BD%BD">0x00 转载</a></li>
+<li><a href="#0x01-%E5%88%A9%E7%94%A8classloaderdefineclass%E7%9B%B4%E6%8E%A5%E5%8A%A0%E8%BD%BD%E5%AD%97%E8%8A%82%E7%A0%81">0x01 利用ClassLoader#defineClass()直接加载字节码</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://siyuan-rao.github.io/templatesimpl-li-yong-lian-chu-kui/">
+              <h3 class="post-title">
+                TemplatesImpl 利用链初窥
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://siyuan-rao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,186 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Burp Suite Pro 插件开发 - 环境配置 | SiYuan-Rao</title>
+<link rel="shortcut icon" href="https://siyuan-rao.github.io/favicon.ico?v=1733983405965">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://siyuan-rao.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Burp Suite Pro 插件开发 - 环境配置 | SiYuan-Rao - Atom Feed" href="https://siyuan-rao.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="0x00 简介
+Burp Suite Pro的强大除了自身提供了 丰富的可供测试人员使用的功能外，其提供的支持第三方拓展插件工功能也极大地方便使用者编写自己的自定义插件。Burp Suite Pro支持的插件类型有Java、Python、R..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://siyuan-rao.github.io">
+  <img class="avatar" src="https://siyuan-rao.github.io/images/avatar.png?v=1733983405965" alt="">
+  </a>
+  <h1 class="site-title">
+    SiYuan-Rao
+  </h1>
+  <p class="site-description">
+    <b>One is Team !</b>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Burp Suite Pro 插件开发 - 环境配置
+            </h2>
+            <div class="post-info">
+              <span>
+                2024-03-22
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h3 id="0x00-简介">0x00 简介</h3>
+<p>Burp Suite Pro的强大除了自身提供了 丰富的可供测试人员使用的功能外，其提供的支持第三方拓展插件工功能也极大地方便使用者编写自己的自定义插件。Burp Suite Pro支持的插件类型有Java、Python、Ruby三种。无论哪种语言的实现，开发者只要选择自己熟悉的语言，按照接口规范去实现想要的功能即可。</p>
+<h3 id="0x01-api">0x01 API</h3>
+<figure data-type="image" tabindex="1"><img src="https://siyuan-rao.github.io/post-images/1711100277009.png" alt="" loading="lazy"></figure>
+<h3 id="0x02-idea创建maven项目">0x02 IDEA创建Maven项目</h3>
+<p><img src="https://siyuan-rao.github.io/post-images/1711100442420.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1711100572706.png" alt="" loading="lazy"><br>
+<img src="https://siyuan-rao.github.io/post-images/1711100665116.png" alt="" loading="lazy"></p>
+<h3 id="0x03-api文档">0x03 API文档</h3>
+<p>https://portswigger.github.io/burp-extensions-montoya-api/javadoc/burp/api/montoya/MontoyaApi.html</p>
+<h3 id="0x04-参考文章">0x04 参考文章</h3>
+<p>https://blog.csdn.net/liaomin416100569/article/details/129188554</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#0x00-%E7%AE%80%E4%BB%8B">0x00 简介</a></li>
+<li><a href="#0x01-api">0x01 API</a></li>
+<li><a href="#0x02-idea%E5%88%9B%E5%BB%BAmaven%E9%A1%B9%E7%9B%AE">0x02 IDEA创建Maven项目</a></li>
+<li><a href="#0x03-api%E6%96%87%E6%A1%A3">0x03 API文档</a></li>
+<li><a href="#0x04-%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0">0x04 参考文章</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://siyuan-rao.github.io/cobalt-strike-or-pei-zhi-zhuan-fa-qi/">
+              <h3 class="post-title">
+                Cobalt Strike | 配置转发器
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://siyuan-rao.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
